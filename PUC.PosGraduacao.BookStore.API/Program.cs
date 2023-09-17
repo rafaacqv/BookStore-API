@@ -1,3 +1,5 @@
+using Microsoft.EntityFrameworkCore;
+using PUC.PosGraduacao.BookStore.Infra.Data.Contexts;
 using PUC.PosGraduacao.BookStore.Services.Extensions;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -21,9 +23,21 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
-
 app.UseAuthorization();
-
 app.MapControllers();
+
+using var scope = app.Services.CreateScope();
+var services = scope.ServiceProvider;
+var context = services.GetRequiredService<ApplicationDbContext>();
+var logger = services.GetRequiredService<ILogger<Program>>();
+
+try
+{
+  await context.Database.MigrateAsync();
+}
+catch(Exception ex)
+{
+  logger.LogError(ex, "An error occured during migration");
+}
 
 app.Run();
