@@ -1,7 +1,11 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using PUC.PosGraduacao.BookStore.Domain.Interfaces.Repositories;
+using PUC.PosGraduacao.BookStore.Domain.Interfaces.Services;
 using PUC.PosGraduacao.BookStore.Infra.Data.Contexts;
+using PUC.PosGraduacao.BookStore.Infra.Data.Repositories;
+using PUC.PosGraduacao.BookStore.Services.Services;
 
 namespace PUC.PosGraduacao.BookStore.Services.Extensions
 {
@@ -13,6 +17,12 @@ namespace PUC.PosGraduacao.BookStore.Services.Extensions
       {
         opt.UseSqlServer(config.GetConnectionString("DefaultConnection"));
       });
+
+      // Services
+      services.AddScoped<IProductService, ProductService>();
+
+      //Repositories
+      services.AddScoped(typeof(IBaseRepository<>), typeof(BaseRepository<>));
       
       return services;    
     }
