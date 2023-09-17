@@ -1,5 +1,7 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using PUC.PosGraduacao.BookStore.Domain.Interfaces.Services;
+using PUC.PosGraduacao.BookStore.Domain.Models;
 
 namespace PUC.PosGraduacao.BookStore.API.Controllers
 {
@@ -7,16 +9,25 @@ namespace PUC.PosGraduacao.BookStore.API.Controllers
   [ApiController]
   public class ProductsController : ControllerBase
   {
-    [HttpGet]
-    public string GetProducts()
+    private readonly IProductService _productService;
+
+    public ProductsController(IProductService productService) 
     {
-      return "Products List";
+      _productService = productService;
+    }
+
+    [HttpGet]
+    public async Task<ActionResult<List<Product>>> GetProducts()
+    {
+      var products = _productService.GetAllProducts();
+      return Ok(products);
     }
 
     [HttpGet("{id}")]
-    public string GetProduct(int id)
+    public async Task<ActionResult<Product>> GetProduct(int id)
     {
-      return "Product";
+      var product = await _productService.GetProductById(id);
+      return Ok(product);
     }
   }
 }
