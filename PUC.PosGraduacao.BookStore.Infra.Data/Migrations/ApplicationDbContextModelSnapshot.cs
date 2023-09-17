@@ -21,7 +21,7 @@ namespace PUC.PosGraduacao.BookStore.Infra.Data.Migrations
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder, 1L, 1);
 
-            modelBuilder.Entity("PUC.PosGraduacao.BookStore.Domain.Models.Products", b =>
+            modelBuilder.Entity("PUC.PosGraduacao.BookStore.Domain.Models.Product", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()

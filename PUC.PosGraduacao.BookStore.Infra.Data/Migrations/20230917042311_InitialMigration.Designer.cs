@@ -11,7 +11,7 @@ using PUC.PosGraduacao.BookStore.Infra.Data.Contexts;
 namespace PUC.PosGraduacao.BookStore.Infra.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20230917030047_InitialMigration")]
+    [Migration("20230917042311_InitialMigration")]
     partial class InitialMigration
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -23,7 +23,7 @@ namespace PUC.PosGraduacao.BookStore.Infra.Data.Migrations
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder, 1L, 1);
 
-            modelBuilder.Entity("PUC.PosGraduacao.BookStore.Domain.Models.Products", b =>
+            modelBuilder.Entity("PUC.PosGraduacao.BookStore.Domain.Models.Product", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
