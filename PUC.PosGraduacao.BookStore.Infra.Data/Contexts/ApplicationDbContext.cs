@@ -1,7 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using PUC.PosGraduacao.BookStore.Domain.Models;
 
-namespace PUC.PosGraduacao.BookStore.Infra.Data.Data
+namespace PUC.PosGraduacao.BookStore.Infra.Data.Contexts
 {
   public class ApplicationDbContext : DbContext
   {
