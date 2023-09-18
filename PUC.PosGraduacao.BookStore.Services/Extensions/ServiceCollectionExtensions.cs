@@ -20,6 +20,9 @@ namespace PUC.PosGraduacao.BookStore.Services.Extensions
 
       // Services
       services.AddScoped<IProductService, ProductService>();
+      services.AddScoped<IFormatService, FormatService>();
+      services.AddScoped<ICategoryService, CategoryService>();
+
 
       //Repositories
       services.AddScoped(typeof(IBaseRepository<>), typeof(BaseRepository<>));
