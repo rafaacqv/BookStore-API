@@ -8,7 +8,7 @@ namespace PUC.PosGraduacao.BookStore.Infra.Data.Config.EFConfig
   {
     public void Configure(EntityTypeBuilder<Product> builder)
     {
-      builder.Property(p => p.Id).IsRequired();
+      builder.Property(p => p.Id).IsRequired().ValueGeneratedNever();
       builder.Property(p => p.Title).IsRequired().HasMaxLength(100);
       builder.Property(p => p.Description).IsRequired().HasMaxLength(400);
       builder.Property(p => p.Price).IsRequired().HasColumnType("decimal(18,2)");

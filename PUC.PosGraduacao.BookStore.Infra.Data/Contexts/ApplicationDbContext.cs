@@ -12,6 +12,7 @@ namespace PUC.PosGraduacao.BookStore.Infra.Data.Contexts
 
     public DbSet<Product> Products { get; set; }
     public DbSet<Category> Categories { get; set; }
+    public DbSet<Format> Formats { get; set; }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {

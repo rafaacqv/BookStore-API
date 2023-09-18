@@ -24,10 +24,7 @@ namespace PUC.PosGraduacao.BookStore.Infra.Data.Migrations
             modelBuilder.Entity("PUC.PosGraduacao.BookStore.Domain.Models.Category", b =>
                 {
                     b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
                         .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
                     b.Property<string>("Name")
                         .HasColumnType("nvarchar(max)");
@@ -40,26 +37,20 @@ namespace PUC.PosGraduacao.BookStore.Infra.Data.Migrations
             modelBuilder.Entity("PUC.PosGraduacao.BookStore.Domain.Models.Format", b =>
                 {
                     b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
                         .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
                     b.Property<string>("Type")
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
 
-                    b.ToTable("Format");
+                    b.ToTable("Formats");
                 });
 
             modelBuilder.Entity("PUC.PosGraduacao.BookStore.Domain.Models.Product", b =>
                 {
                     b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
                         .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
                     b.Property<string>("Author")
                         .IsRequired()
