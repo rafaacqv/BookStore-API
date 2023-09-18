@@ -17,6 +17,8 @@ namespace PUC.PosGraduacao.BookStore.Infra.Data.Config.EFConfig
       builder.Property(p => p.Author).IsRequired().HasMaxLength(100);
       builder.HasOne(p => p.Category).WithMany()
         .HasForeignKey(p => p.CategoryId);
+      builder.HasOne(p => p.Format).WithMany()
+        .HasForeignKey(p => p.FormatId);
     }
   }
 }

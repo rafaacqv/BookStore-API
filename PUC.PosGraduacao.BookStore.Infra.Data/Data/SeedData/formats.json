@@ -1,0 +1,10 @@
+[
+  {
+    "Id": 1,
+    "Type": "Hardcover"
+  },
+  {
+    "Id": 2,
+    "Type": "Paperback"
+  }
+]

@@ -1,0 +1,18 @@
+[
+  {
+    "Id": 1,
+    "Name": "Romance" 
+  },
+  {
+    "Id": 2,
+    "Name": "Children's Books" 
+  },
+  {
+    "Id": 3,
+    "Name": "Action & Adventure" 
+  },
+  {
+    "Id": 4,
+    "Name": "Computers & Technology" 
+  }
+]

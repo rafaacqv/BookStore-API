@@ -11,7 +11,7 @@ using PUC.PosGraduacao.BookStore.Infra.Data.Contexts;
 namespace PUC.PosGraduacao.BookStore.Infra.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20230917202412_InitialCreate")]
+    [Migration("20230918014307_InitialCreate")]
     partial class InitialCreate
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -39,6 +39,22 @@ namespace PUC.PosGraduacao.BookStore.Infra.Data.Migrations
                     b.ToTable("Categories");
                 });
 
+            modelBuilder.Entity("PUC.PosGraduacao.BookStore.Domain.Models.Format", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+
+                    b.Property<string>("Type")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Format");
+                });
+
             modelBuilder.Entity("PUC.PosGraduacao.BookStore.Domain.Models.Product", b =>
                 {
                     b.Property<int>("Id")
@@ -59,6 +75,9 @@ namespace PUC.PosGraduacao.BookStore.Infra.Data.Migrations
                         .IsRequired()
                         .HasMaxLength(400)
                         .HasColumnType("nvarchar(400)");
+
+                    b.Property<int>("FormatId")
+                        .HasColumnType("int");
 
                     b.Property<string>("ImageUrl")
                         .IsRequired()
@@ -81,6 +100,8 @@ namespace PUC.PosGraduacao.BookStore.Infra.Data.Migrations
 
                     b.HasIndex("CategoryId");
 
+                    b.HasIndex("FormatId");
+
                     b.ToTable("Products");
                 });
 
@@ -92,7 +113,15 @@ namespace PUC.PosGraduacao.BookStore.Infra.Data.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
+                    b.HasOne("PUC.PosGraduacao.BookStore.Domain.Models.Format", "Format")
+                        .WithMany()
+                        .HasForeignKey("FormatId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
                     b.Navigation("Category");
+
+                    b.Navigation("Format");
                 });
 #pragma warning restore 612, 618
         }

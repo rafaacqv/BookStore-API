@@ -22,6 +22,19 @@ namespace PUC.PosGraduacao.BookStore.Infra.Data.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "Format",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Type = table.Column<string>(type: "nvarchar(max)", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Format", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "Products",
                 columns: table => new
                 {
@@ -33,7 +46,8 @@ namespace PUC.PosGraduacao.BookStore.Infra.Data.Migrations
                     ImageUrl = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Author = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false),
                     Isbn = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
-                    CategoryId = table.Column<int>(type: "int", nullable: false)
+                    CategoryId = table.Column<int>(type: "int", nullable: false),
+                    FormatId = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -44,12 +58,23 @@ namespace PUC.PosGraduacao.BookStore.Infra.Data.Migrations
                         principalTable: "Categories",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_Products_Format_FormatId",
+                        column: x => x.FormatId,
+                        principalTable: "Format",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateIndex(
                 name: "IX_Products_CategoryId",
                 table: "Products",
                 column: "CategoryId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Products_FormatId",
+                table: "Products",
+                column: "FormatId");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
@@ -59,6 +84,9 @@ namespace PUC.PosGraduacao.BookStore.Infra.Data.Migrations
 
             migrationBuilder.DropTable(
                 name: "Categories");
+
+            migrationBuilder.DropTable(
+                name: "Format");
         }
     }
 }
