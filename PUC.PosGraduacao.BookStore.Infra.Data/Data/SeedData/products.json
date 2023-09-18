@@ -1,0 +1,123 @@
+[
+  {
+    "Id": 1,
+    "Title": "Harry Potter and the Sorcerer's Stone",
+    "Description": "Harry Potter has no idea how famous he is. That's because he's being raised by his miserable aunt and uncle who are terrified Harry will learn that he's really a wizard, just as his parents were. But everything changes when Harry is summoned to attend an infamous school for wizards, and he begins to discover some clues about his illustrious birthright.",
+    "Price": 35,
+    "ImageUrl": "images/sorcerer-stone.png",
+    "Author": "J.K. Rowling",
+    "Isbn": "1338878921",
+    "CategoryId": 3,
+    "FormatId": 1
+  },
+  {
+    "Id": 2,
+    "Title": "Harry Potter and the Chamber of Secrets",
+    "Description": "The Dursleys were so mean and hideous that summer that all Harry Potter wanted was to get back to the Hogwarts School for Witchcraft and Wizardry. But just as he's packing his bags, Harry receives a warning from a strange, impish creature named Dobby who says that if Harry Potter returns to Hogwarts, disaster will strike.",
+    "Price": 45,
+    "ImageUrl": "images/chamber-secrets.png",
+    "Author": "J.K. Rowling",
+    "Isbn": "133887893X",
+    "CategoryId": 3,
+    "FormatId": 2
+  },
+  {
+    "Id": 3,
+    "Title": "Harry Potter and the Goblet of Fire",
+    "Description": "The Triwizard Tournament is to be held at Hogwarts. Only wizards who are over seventeen are allowed to enter - but that doesn't stop Harry dreaming that he will win the competition. Then at Hallowe'en, when the Goblet of Fire makes its selection, Harry is amazed to find his name is one of those that the magical cup picks out. ",
+    "Price": 45,
+    "ImageUrl": "images/globet-fire.png",
+    "Author": "J.K. Rowling",
+    "Isbn": "1338878956",
+    "CategoryId": 3,
+    "FormatId": 1
+  },
+  {
+    "Id": 4,
+    "Title": "Harry Potter and the Half-Blood Prince",
+    "Description": "As the Harry Potter sequence draws to a close, Harry's most dangerous adventure yet is just beginning...We could tell you, but then we'd have to Obliviate your memory.",
+    "Price": 55,
+    "ImageUrl": "images/blood-prince.png",
+    "Author": "J.K. Rowling",
+    "Isbn": "0439784549",
+    "CategoryId": 3,
+    "FormatId": 2
+  },
+  {
+    "Id": 5,
+    "Title": "If Animals Kissed Good Night",
+    "Description": "A must-have for every nursery! If Animals Kissed Good Night is a beloved, bestselling picture book that imagines the bedtime rituals of cuddly creatures all across the animal kingdom – making it the perfect read aloud to snuggle up with at the end of each day.",
+    "Price": 25,
+    "ImageUrl": "images/if-animals.png",
+    "Author": "Ann Whitford Pau",
+    "Isbn": "0374300216",
+    "CategoryId": 2,
+    "FormatId": 2
+  },
+  {
+    "Id": 6,
+    "Title": "I Love You to the Moon and Back",
+    "Description": "The sun rises, and a bear and cub begin their day together. They splash in the water, climb mountains, watch the colorful lights in the shimmering sky, and play with friends. They show their love for each other by touching noses, chasing each other, and, of course, hugging and snuggling before bed. ",
+    "Price": 15,
+    "ImageUrl": "images/love-you-moon.png",
+    "Author": "Amelia Hepworth",
+    "Isbn": "1589255518",
+    "CategoryId": 2,
+    "FormatId": 1
+  },
+  {
+    "Id": 7,
+    "Title": "The Going To Bed Book",
+    "Description": "This classic bedtime story is just right for winding down the day as a joyful, silly group of animals scrub scrub scrub in the tub, brush and brush and brush their teeth, and finally rock and rock and rock to sleep.",
+    "Price": 15,
+    "ImageUrl": "images/bed-book.png",
+    "Author": "Sandra Boynton",
+    "Isbn": "0671449028",
+    "CategoryId": 2,
+    "FormatId": 1
+  },
+  {
+    "Id": 8,
+    "Title": "The Art of Functional Programming",
+    "Description": "Functional programming is a powerful and elegant programming paradigm. Initially only popular among university researchers, its gained much traction in the software industry in the last few years. From big companies to start-ups, engineers and managers have realized that functional programming excels at abstraction and composition.",
+    "Price": 120,
+    "ImageUrl": "images/functional-programming.png",
+    "Author": "Minh Quang Tran",
+    "Isbn": "3000735348",
+    "CategoryId": 4,
+    "FormatId": 1
+  },
+  {
+    "Id": 9,
+    "Title": "Cracking the Coding Interview",
+    "Description": "Cracking the Coding Interview is here to help you through this process, teaching you what you need to know and enabling you to perform at your very best. I've coached and interviewed hundreds of software engineers. The result is this book.",
+    "Price": 120,
+    "ImageUrl": "images/crack-interview.png",
+    "Author": "Gayle Laakmann McDowell",
+    "Isbn": "0984782869",
+    "CategoryId": 4,
+    "FormatId": 2
+  },
+  {
+    "Id": 10,
+    "Title": "Software Architecture: The Hard Parts: Modern Trade-Off Analyses for Distributed Architectures",
+    "Description": "There are no easy decisions in software architecture. Instead, there are many hard parts--difficult problems or issues with no best practices--that force you to choose among various compromises. With this book, you'll learn how to think critically about the trade-offs involved with distributed architectures.",
+    "Price": 115,
+    "ImageUrl": "images/sftw-architecture.png",
+    "Author": "Neal Ford",
+    "Isbn": "1492086894",
+    "CategoryId": 4,
+    "FormatId": 1
+  },
+  {
+    "Id": 11,
+    "Title": "C Programming Language",
+    "Description": "The authors present the complete guide to ANSI standard C language programming. Written by the developers of C, this new version helps readers keep up with the finalized ANSI standard for C while showing how to take advantage of C's rich set of operators, economy of expression, improved control flow, and data structures.",
+    "Price": 99,
+    "ImageUrl": "images/c-language.png",
+    "Author": "Brian W. Kernighan",
+    "Isbn": "0131103628",
+    "CategoryId": 4,
+    "FormatId": 2
+  }
+]
