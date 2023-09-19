@@ -11,14 +11,14 @@ namespace PUC.PosGraduacao.BookStore.Services.Services
     {
       _baseRepository = baseRepository;
     }
-    public async Task<List<Product>> GetAllProducts()
+    public async Task<IReadOnlyList<Product>> GetAllProductsAsync()
     {
-      return _baseRepository.GetAll().ToList();
+      return await _baseRepository.GetAllAsync();
     }
 
-    public async Task<Product> GetProductById(int id)
+    public async Task<Product> GetProductByIdAsync(int id)
     {
-      return await _baseRepository.GetById(id);
+      return await _baseRepository.GetByIdAsync(id);
     }
   }
 }

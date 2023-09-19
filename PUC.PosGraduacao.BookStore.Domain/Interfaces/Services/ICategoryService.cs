@@ -9,7 +9,7 @@ namespace PUC.PosGraduacao.BookStore.Domain.Interfaces.Services
 {
   public interface ICategoryService
   {
-    Task<List<Category>> GetAllCategories();
-    Task<Category> GetCategoryById(int id);
+    Task<IReadOnlyList<Category>> GetAllCategoriesAsync();
+    Task<Category> GetCategoryByIdAsync(int id);
   }
 }

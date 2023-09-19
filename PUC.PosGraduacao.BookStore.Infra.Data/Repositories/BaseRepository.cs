@@ -13,37 +13,33 @@ namespace PUC.PosGraduacao.BookStore.Infra.Data.Repositories
       _context = context;        
     }
 
-    public async Task Create(T entity)
+    public async Task CreateAsync(T entity)
     {
       await _context.Set<T>().AddAsync(entity);
       await _context.SaveChangesAsync();
     }
 
-    public async Task Delete(int id)
+    public async Task DeleteAsync(int id)
     {
-      var entity = await GetById(id);
+      var entity = await GetByIdAsync(id);
       _context.Set<T>().Remove(entity);
       await _context.SaveChangesAsync();
     }
 
-    public IQueryable<T> GetAll()
+    public async Task<IReadOnlyList<T>> GetAllAsync()
     {
-      return _context.Set<T>().AsNoTracking();
+      return await _context.Set<T>().ToListAsync();
     }
 
-    public async Task<T> GetById(int id)
+    public async Task<T> GetByIdAsync(int id)
     {
-      var item =  await _context.Set<T>()
-                 .AsNoTracking()
-                 .FirstOrDefaultAsync(e => e.Id == id);
-
-      _ = item ?? throw new ArgumentNullException(nameof(item));
-
-      return item;
-
+      var element = await _context.Set<T>().FindAsync(id);
+      _ = element ?? throw new ArgumentNullException(nameof(element));
+      
+      return element;
     }
 
-    public async Task Update(int id, T entity)
+    public async Task UpdateAsync(int id, T entity)
     {
       _context.Set<T>().Update(entity);
       await _context.SaveChangesAsync();

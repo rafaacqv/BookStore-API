@@ -19,14 +19,14 @@ namespace PUC.PosGraduacao.BookStore.API.Controllers
     [HttpGet]
     public async Task<ActionResult<List<Category>>> GetCategories()
     {
-      var categories = await _categoryService.GetAllCategories();
+      var categories = await _categoryService.GetAllCategoriesAsync();
       return Ok(categories);
     }
 
     [HttpGet("{id}")]
     public async Task<ActionResult<Category>> GetCategory(int id)
     {
-      var category = await _categoryService.GetCategoryById(id);
+      var category = await _categoryService.GetCategoryByIdAsync(id);
       return Ok(category);
     }
   }
