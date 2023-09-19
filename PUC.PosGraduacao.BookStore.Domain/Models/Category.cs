@@ -7,9 +7,8 @@ using System.Threading.Tasks;
 
 namespace PUC.PosGraduacao.BookStore.Domain.Models
 {
-  public class Category : IEntity
+  public class Category : BaseEntity
   {
-    public int Id { get; set; }
     public string? Name { get; set;}
   }
 }

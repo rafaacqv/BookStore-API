@@ -1,6 +1,7 @@
 ﻿using PUC.PosGraduacao.BookStore.Domain.Interfaces.Repositories;
 using PUC.PosGraduacao.BookStore.Domain.Interfaces.Services;
 using PUC.PosGraduacao.BookStore.Domain.Models;
+using PUC.PosGraduacao.BookStore.Domain.Specifications;
 
 namespace PUC.PosGraduacao.BookStore.Services.Services
 {
@@ -13,7 +14,8 @@ namespace PUC.PosGraduacao.BookStore.Services.Services
     }
     public async Task<IReadOnlyList<Product>> GetAllProductsAsync()
     {
-      return await _baseRepository.GetAllAsync();
+      var spec = new ProductsSpecification();
+      return await _baseRepository.GetAllWithSpecAsync(spec);
     }
 
     public async Task<Product> GetProductByIdAsync(int id)
