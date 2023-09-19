@@ -18,7 +18,7 @@ namespace PUC.PosGraduacao.BookStore.API.Controllers
     [HttpGet]
     public async Task<ActionResult<List<Product>>> GetProducts()
     {
-      var products = _productService.GetAllProducts();
+      var products = await _productService.GetAllProducts();
       return Ok(products);
     }
 

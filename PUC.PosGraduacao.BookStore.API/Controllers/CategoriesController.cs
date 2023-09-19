@@ -19,7 +19,7 @@ namespace PUC.PosGraduacao.BookStore.API.Controllers
     [HttpGet]
     public async Task<ActionResult<List<Category>>> GetCategories()
     {
-      var categories = _categoryService.GetAllCategories();
+      var categories = await _categoryService.GetAllCategories();
       return Ok(categories);
     }
 

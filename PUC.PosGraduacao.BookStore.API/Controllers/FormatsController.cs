@@ -18,7 +18,7 @@ namespace PUC.PosGraduacao.BookStore.API.Controllers
     [HttpGet]
     public async Task<ActionResult<List<Format>>> GetFormats()
     {
-      var formats = _formatService.GetAllFormats();
+      var formats = await _formatService.GetAllFormats();
       return Ok(formats);
     }
 
