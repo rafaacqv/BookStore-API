@@ -18,7 +18,7 @@ namespace PUC.PosGraduacao.BookStore.API.Controllers
     }
 
     [HttpGet]
-    public async Task<ActionResult<List<Format>>> GetFormats()
+    public async Task<ActionResult<FormatsListResponse>> GetFormats()
     {
       var response = await _formatService.GetAllFormatsAsync();
       var responseObject = response.HttpStatus == StatusCodeEnum.NoContent ? null : response;
