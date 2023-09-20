@@ -26,6 +26,7 @@ namespace PUC.PosGraduacao.BookStore.Services.Services
       try
       {
         var categoriesList = await _baseRepository.GetAllAsync();
+        response.Categories = categoriesList.ToList();
 
         if (!response.Categories.Any())
         {
@@ -33,7 +34,6 @@ namespace PUC.PosGraduacao.BookStore.Services.Services
         }
         else
         {
-          response.Categories = categoriesList.ToList();
           response.HttpStatus = StatusCodeEnum.Success;
         }
       }

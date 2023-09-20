@@ -1,6 +1,9 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using PUC.PosGraduacao.BookStore.Domain.DTO;
+using PUC.PosGraduacao.BookStore.Domain.Enums;
 using PUC.PosGraduacao.BookStore.Domain.Interfaces.Services;
 using PUC.PosGraduacao.BookStore.Domain.Models;
+using PUC.PosGraduacao.BookStore.Services.Services;
 
 namespace PUC.PosGraduacao.BookStore.API.Controllers
 {
@@ -18,15 +21,19 @@ namespace PUC.PosGraduacao.BookStore.API.Controllers
     [HttpGet]
     public async Task<ActionResult<List<Format>>> GetFormats()
     {
-      var formats = await _formatService.GetAllFormatsAsync();
-      return Ok(formats);
+      var response = await _formatService.GetAllFormatsAsync();
+      var responseObject = response.HttpStatus == StatusCodeEnum.NoContent ? null : response;
+
+      return StatusCode((int)response.HttpStatus, responseObject);
     }
 
-    [HttpGet("{id}")]
-    public async Task<ActionResult<Format>> GetFormat(int id)
+    [HttpPost]
+    public async Task<ActionResult<Format>> GetFormat([FromBody] FormatRequest request)
     {
-      var format = await _formatService.GetFormatByIdAsync(id);
-      return Ok(format);
+      var response = await _formatService.GetFormatByIdAsync(request);
+      var responseObject = response.HttpStatus == StatusCodeEnum.NoContent ? null : response;
+
+      return StatusCode((int)response.HttpStatus, responseObject);
     }
   }
 }
