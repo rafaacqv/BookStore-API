@@ -27,7 +27,7 @@ namespace PUC.PosGraduacao.BookStore.API.Controllers
     }
 
     [HttpPost]
-    public async Task<ActionResult<Category>> GetCategory(CategoryRequest request)
+    public async Task<ActionResult<Category>> GetCategory([FromBody] CategoryRequest request)
     {
       var response = await _categoryService.GetCategoryByIdAsync(request);
       var responseObject = response.HttpStatus == StatusCodeEnum.NoContent ? null : response;
