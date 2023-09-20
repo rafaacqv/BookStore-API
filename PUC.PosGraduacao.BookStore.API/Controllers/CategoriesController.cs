@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using PUC.PosGraduacao.BookStore.Domain.DTO;
 using PUC.PosGraduacao.BookStore.Domain.Interfaces.Services;
 using PUC.PosGraduacao.BookStore.Domain.Models;
-using PUC.PosGraduacao.BookStore.Services.Services;
 
 namespace PUC.PosGraduacao.BookStore.API.Controllers
 {
@@ -17,17 +17,17 @@ namespace PUC.PosGraduacao.BookStore.API.Controllers
     }
 
     [HttpGet]
-    public async Task<ActionResult<List<Category>>> GetCategories()
+    public async Task<ActionResult<CategoriesListResponse>> GetCategories()
     {
-      var categories = await _categoryService.GetAllCategoriesAsync();
-      return Ok(categories);
+      var response = await _categoryService.GetAllCategoriesAsync();
+      return StatusCode(response.HttpStatusCode, response);
     }
 
-    [HttpGet("{id}")]
-    public async Task<ActionResult<Category>> GetCategory(int id)
+    [HttpPost]
+    public async Task<ActionResult<Category>> GetCategory(CategoryRequest request)
     {
-      var category = await _categoryService.GetCategoryByIdAsync(id);
-      return Ok(category);
+      var response = await _categoryService.GetCategoryByIdAsync(request);
+      return StatusCode(response.HttpStatusCode, response);
     }
   }
 }

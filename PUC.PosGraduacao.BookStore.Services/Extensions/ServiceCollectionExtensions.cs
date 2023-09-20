@@ -4,6 +4,7 @@ using Microsoft.Extensions.DependencyInjection;
 using PUC.PosGraduacao.BookStore.Domain.Interfaces.Repositories;
 using PUC.PosGraduacao.BookStore.Domain.Interfaces.Services;
 using PUC.PosGraduacao.BookStore.Infra.Data.Contexts;
+using PUC.PosGraduacao.BookStore.Infra.Data.Profiles;
 using PUC.PosGraduacao.BookStore.Infra.Data.Repositories;
 using PUC.PosGraduacao.BookStore.Services.Services;
 
@@ -23,7 +24,10 @@ namespace PUC.PosGraduacao.BookStore.Services.Extensions
       services.AddScoped<ICategoryService, CategoryService>();
 
       services.AddScoped(typeof(IBaseRepository<>), typeof(BaseRepository<>));
-      
+
+      services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
+      services.AddAutoMapper(typeof(MapperProfile).Assembly);
+
       return services;    
     }
   }
