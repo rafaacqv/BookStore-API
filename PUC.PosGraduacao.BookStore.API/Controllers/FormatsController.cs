@@ -27,7 +27,7 @@ namespace PUC.PosGraduacao.BookStore.API.Controllers
     }
 
     [HttpPost]
-    public async Task<ActionResult<Format>> GetFormat([FromBody] FormatRequest request)
+    public async Task<ActionResult<FormatResponse>> GetFormat([FromBody] FormatRequest request)
     {
       var response = await _formatService.GetFormatByIdAsync(request);
       var responseObject = response.HttpStatus == StatusCodeEnum.NoContent ? null : response;
