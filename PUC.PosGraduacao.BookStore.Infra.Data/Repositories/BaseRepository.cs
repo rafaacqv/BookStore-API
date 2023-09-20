@@ -24,6 +24,8 @@ namespace PUC.PosGraduacao.BookStore.Infra.Data.Repositories
     public async Task DeleteAsync(int id)
     {
       var entity = await GetByIdAsync(id);
+      ArgumentNullException.ThrowIfNull(entity);
+      
       _context.Set<T>().Remove(entity);
       await _context.SaveChangesAsync();
     }
