@@ -18,13 +18,10 @@ namespace PUC.PosGraduacao.BookStore.Services.Extensions
         opt.UseSqlServer(config.GetConnectionString("DefaultConnection"));
       });
 
-      // Services
       services.AddScoped<IProductService, ProductService>();
       services.AddScoped<IFormatService, FormatService>();
       services.AddScoped<ICategoryService, CategoryService>();
 
-
-      //Repositories
       services.AddScoped(typeof(IBaseRepository<>), typeof(BaseRepository<>));
       
       return services;    
