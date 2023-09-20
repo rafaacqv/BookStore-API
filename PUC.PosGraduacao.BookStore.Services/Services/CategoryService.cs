@@ -1,9 +1,9 @@
 ﻿using AutoMapper;
 using PUC.PosGraduacao.BookStore.Domain.DTO;
+using PUC.PosGraduacao.BookStore.Domain.Enums;
 using PUC.PosGraduacao.BookStore.Domain.Interfaces.Repositories;
 using PUC.PosGraduacao.BookStore.Domain.Interfaces.Services;
 using PUC.PosGraduacao.BookStore.Domain.Models;
-using System.Net;
 
 namespace PUC.PosGraduacao.BookStore.Services.Services
 {
@@ -20,21 +20,21 @@ namespace PUC.PosGraduacao.BookStore.Services.Services
     {
       var response = new CategoriesListResponse()
       {
-        HttpStatusCode = (int)HttpStatusCode.InternalServerError
+        HttpStatus = StatusCodeEnum.Error
       };
 
       try
       {
         var categoriesList = await _baseRepository.GetAllAsync();
-        
-        if(!categoriesList.Any())
+
+        if (!response.Categories.Any())
         {
-          response.HttpStatusCode = (int)HttpStatusCode.NoContent;
+          response.HttpStatus = StatusCodeEnum.NoContent;
         }
         else
         {
           response.Categories = categoriesList.ToList();
-          response.HttpStatusCode = (int)HttpStatusCode.OK;
+          response.HttpStatus = StatusCodeEnum.Success;
         }
       }
       catch (Exception ex)
@@ -50,7 +50,7 @@ namespace PUC.PosGraduacao.BookStore.Services.Services
 
       var response = new CategoryResponse()
       {
-        HttpStatusCode = (int)HttpStatusCode.InternalServerError
+        HttpStatus = StatusCodeEnum.Error
       }; 
 
       try
@@ -59,12 +59,12 @@ namespace PUC.PosGraduacao.BookStore.Services.Services
         
         if(category == null)
         {
-          response.HttpStatusCode = (int)HttpStatusCode.NoContent;
+          response.HttpStatus = StatusCodeEnum.NoContent;
         }
         else
         {
           response = _mapper.Map<CategoryResponse>(category);
-          response.HttpStatusCode = (int)HttpStatusCode.OK;
+          response.HttpStatus = StatusCodeEnum.Success;
         }
       }
       catch(Exception ex)

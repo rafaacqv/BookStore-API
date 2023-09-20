@@ -2,6 +2,7 @@
 using PUC.PosGraduacao.BookStore.Domain.DTO;
 using PUC.PosGraduacao.BookStore.Domain.Interfaces.Services;
 using PUC.PosGraduacao.BookStore.Domain.Models;
+using PUC.PosGraduacao.BookStore.Domain.Enums;
 
 namespace PUC.PosGraduacao.BookStore.API.Controllers
 {
@@ -20,14 +21,18 @@ namespace PUC.PosGraduacao.BookStore.API.Controllers
     public async Task<ActionResult<CategoriesListResponse>> GetCategories()
     {
       var response = await _categoryService.GetAllCategoriesAsync();
-      return StatusCode(response.HttpStatusCode, response);
+      var responseObject = response.HttpStatus == StatusCodeEnum.NoContent ? null : response;
+
+      return StatusCode((int)response.HttpStatus, responseObject);
     }
 
     [HttpPost]
     public async Task<ActionResult<Category>> GetCategory(CategoryRequest request)
     {
       var response = await _categoryService.GetCategoryByIdAsync(request);
-      return StatusCode(response.HttpStatusCode, response);
+      var responseObject = response.HttpStatus == StatusCodeEnum.NoContent ? null : response;
+
+      return StatusCode((int)response.HttpStatus, responseObject);
     }
   }
 }
