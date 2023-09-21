@@ -26,7 +26,7 @@ namespace PUC.PosGraduacao.BookStore.Services.Services
 
       try
       {
-        var spec = new ProductsSpecification();
+        var spec = new ProductsWithCategoriesAndFormatsSpecification();
         var productsList = await _baseRepository.GetAllWithSpecAsync(spec);
         
         response.Products = productsList.ToList();
