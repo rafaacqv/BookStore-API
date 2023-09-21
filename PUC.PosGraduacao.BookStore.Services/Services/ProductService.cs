@@ -29,7 +29,7 @@ namespace PUC.PosGraduacao.BookStore.Services.Services
         var spec = new ProductsWithCategoriesAndFormatsSpecification();
         var productsList = await _baseRepository.GetAllWithSpecAsync(spec);
         
-        response.Products = productsList.ToList();
+        response.Products = _mapper.Map<List<ProductDTO>>(productsList.ToList());
 
         if (!response.Products.Any())
         {
@@ -66,7 +66,7 @@ namespace PUC.PosGraduacao.BookStore.Services.Services
         }
         else
         {
-          response = _mapper.Map<ProductsResponse>(product);
+          response.Product = _mapper.Map<ProductDTO>(product);
           response.HttpStatus = StatusCodeEnum.Success;
         }
       }

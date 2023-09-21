@@ -11,6 +11,12 @@ namespace PUC.PosGraduacao.BookStore.Infra.Data.Profiles
       CreateMap<Category, CategoryResponse>();
       CreateMap<Format, FormatResponse>();
       CreateMap<Product, ProductsResponse>();
+      
+      CreateMap<Product, ProductDTO>()
+        .ForMember(dest => dest.Category,
+        opt => opt.MapFrom(src => src.Category.Name))
+        .ForMember(dest => dest.Format,
+        opt => opt.MapFrom(src => src.Format.Type));
     }
   }
 }
