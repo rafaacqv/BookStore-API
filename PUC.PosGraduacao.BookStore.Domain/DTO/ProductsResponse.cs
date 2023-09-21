@@ -1,13 +1,16 @@
-﻿namespace PUC.PosGraduacao.BookStore.Domain.Models
+﻿using PUC.PosGraduacao.BookStore.Domain.Models;
+
+namespace PUC.PosGraduacao.BookStore.Domain.DTO
 {
-  public class Product : BaseEntity
+  public class ProductsResponse : BaseResponse
   {
+    public int Id { get; set; }
     public string? Title { get; set; }
     public string? Description { get; set; }
     public decimal Price { get; set; }
-    public string? ImageUrl { get; set; } 
+    public string? ImageUrl { get; set; }
     public string? Author { get; set; }
-    public string? Isbn { get; set; }  
+    public string? Isbn { get; set; }
     public Category? Category { get; set; }
     public int CategoryId { get; set; }
     public Format? Format { get; set; }

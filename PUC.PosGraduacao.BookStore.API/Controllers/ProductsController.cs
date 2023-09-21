@@ -3,6 +3,7 @@ using PUC.PosGraduacao.BookStore.Domain.DTO;
 using PUC.PosGraduacao.BookStore.Domain.Enums;
 using PUC.PosGraduacao.BookStore.Domain.Interfaces.Services;
 using PUC.PosGraduacao.BookStore.Domain.Models;
+using PUC.PosGraduacao.BookStore.Services.Services;
 
 namespace PUC.PosGraduacao.BookStore.API.Controllers
 {
@@ -27,10 +28,12 @@ namespace PUC.PosGraduacao.BookStore.API.Controllers
     }
 
     [HttpGet("{id}")]
-    public async Task<ActionResult<Product>> GetProduct(int id)
+    public async Task<ActionResult<ProductsResponse>> GetProduct(int id)
     {
-      var product = await _productService.GetProductByIdAsync(id);
-      return Ok(product);
+      var response = await _productService.GetProductByIdAsync(id);
+      var responseObject = response.HttpStatus == StatusCodeEnum.NoContent ? null : response;
+
+      return StatusCode((int)response.HttpStatus, responseObject);
     }
   }
 }

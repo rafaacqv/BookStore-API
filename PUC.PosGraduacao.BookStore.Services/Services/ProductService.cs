@@ -47,9 +47,35 @@ namespace PUC.PosGraduacao.BookStore.Services.Services
       return response;
     }
 
-    public async Task<Product> GetProductByIdAsync(int id)
+    public async Task<ProductsResponse> GetProductByIdAsync(int id)
     {
-      return await _baseRepository.GetByIdAsync(id);
+
+      var response = new ProductsResponse()
+      {
+        HttpStatus = StatusCodeEnum.Error
+      };
+
+      try
+      {
+        var spec = new ProductsWithCategoriesAndFormatsSpecification(id);
+        var product = await _baseRepository.GetEntityWithSpecAsync(spec);
+
+        if (product == null)
+        {
+          response.HttpStatus = StatusCodeEnum.NoContent;
+        }
+        else
+        {
+          response = _mapper.Map<ProductsResponse>(product);
+          response.HttpStatus = StatusCodeEnum.Success;
+        }
+      }
+      catch (Exception ex)
+      {
+        response.Message.Add($"An error occured: Error: {ex.Message}, StackTrace: {ex.StackTrace}");
+      }
+
+      return response;
     }
   }
 }

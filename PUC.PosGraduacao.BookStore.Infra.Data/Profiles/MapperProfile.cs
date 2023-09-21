@@ -10,6 +10,7 @@ namespace PUC.PosGraduacao.BookStore.Infra.Data.Profiles
     {
       CreateMap<Category, CategoryResponse>();
       CreateMap<Format, FormatResponse>();
+      CreateMap<Product, ProductsResponse>();
     }
   }
 }
