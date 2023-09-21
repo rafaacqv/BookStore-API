@@ -1,4 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using PUC.PosGraduacao.BookStore.Domain.DTO;
+using PUC.PosGraduacao.BookStore.Domain.Enums;
 using PUC.PosGraduacao.BookStore.Domain.Interfaces.Services;
 using PUC.PosGraduacao.BookStore.Domain.Models;
 
@@ -16,10 +18,12 @@ namespace PUC.PosGraduacao.BookStore.API.Controllers
     }
 
     [HttpGet]
-    public async Task<ActionResult<IReadOnlyList<Product>>> GetProducts()
+    public async Task<ActionResult<ProductsListResponse>> GetProducts()
     {
-      var products = await _productService.GetAllProductsAsync();
-      return Ok(products);
+      var response = await _productService.GetAllProductsAsync();
+      var responseObject = response.HttpStatus == StatusCodeEnum.NoContent ? null : response;
+
+      return StatusCode((int)response.HttpStatus, responseObject);
     }
 
     [HttpGet("{id}")]
