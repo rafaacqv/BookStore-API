@@ -1,7 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using PUC.PosGraduacao.BookStore.Domain.DTO;
 using PUC.PosGraduacao.BookStore.Domain.Interfaces.Services;
-using PUC.PosGraduacao.BookStore.Domain.Models;
 using PUC.PosGraduacao.BookStore.Domain.Enums;
 
 namespace PUC.PosGraduacao.BookStore.API.Controllers
