@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using Microsoft.Extensions.Logging;
 using PUC.PosGraduacao.BookStore.Domain.DTO;
 using PUC.PosGraduacao.BookStore.Domain.Enums;
 using PUC.PosGraduacao.BookStore.Domain.Interfaces.Repositories;
@@ -11,37 +12,26 @@ namespace PUC.PosGraduacao.BookStore.Services.Services
   {
     private readonly IBaseRepository<Format> _baseRepository;
     private readonly IMapper _mapper;
+    private readonly ILogger<FormatService> _logger;
 
-    public FormatService(IBaseRepository<Format> baseRepository, IMapper mapper)
+    public FormatService(IBaseRepository<Format> baseRepository, IMapper mapper, ILogger<FormatService> logger)
     {
+      _logger = logger;
       _mapper = mapper;
       _baseRepository = baseRepository;
     }
 
     public async Task<FormatsListResponse> GetAllFormatsAsync()
     {
-      var response = new FormatsListResponse()
-      {
-        HttpStatus = StatusCodeEnum.Error
-      };
-
+      var response = new FormatsListResponse();
       try
       {
         var formatsList = await _baseRepository.GetAllAsync();
         response.Formats = formatsList.ToList();
-
-        if (!response.Formats.Any())
-        {
-          response.HttpStatus = StatusCodeEnum.NoContent;
-        }
-        else
-        {
-          response.HttpStatus = StatusCodeEnum.Success;
-        }
       }
       catch (Exception ex)
       {
-        response.Message.Add($"An error occured: Error: {ex.Message}, StackTrace: {ex.StackTrace}");
+        _logger.LogError("Error while trying to fetch formats list. Error: {error}, Stack: {stack}", ex.Message, ex.StackTrace);
       }
       return response;
     }
@@ -49,31 +39,16 @@ namespace PUC.PosGraduacao.BookStore.Services.Services
     public async Task<FormatResponse> GetFormatByIdAsync(FormatRequest request)
     {
       _ = request ?? throw new ArgumentNullException(nameof(request));
-
-      var response = new FormatResponse()
-      {
-        HttpStatus = StatusCodeEnum.Error
-      };
-
+      var response = new FormatResponse();
       try
       {
         var format = await _baseRepository.GetByIdAsync(request.Id);
-
-        if (format == null)
-        {
-          response.HttpStatus = StatusCodeEnum.NoContent;
-        }
-        else
-        {
-          response = _mapper.Map<FormatResponse>(format);
-          response.HttpStatus = StatusCodeEnum.Success;
-        }
+        response = _mapper.Map<FormatResponse>(format);
       }
       catch (Exception ex)
       {
-        response.Message.Add($"An error occured: Error: {ex.Message}, StackTrace: {ex.StackTrace}");
+        _logger.LogError("Error while trying to fetch a format. Error: {error}, Stack: {stack}", ex.Message, ex.StackTrace);
       }
-
       return response;
     }
   }

@@ -37,7 +37,6 @@ namespace PUC.PosGraduacao.BookStore.Services.Services
     {
       _ = request ?? throw new ArgumentNullException(nameof(request));
       var response = new CategoryResponse();
-
       try
       {
         var category = await _baseRepository.GetByIdAsync(request.Id);
@@ -47,7 +46,6 @@ namespace PUC.PosGraduacao.BookStore.Services.Services
       {
         _logger.LogError("Error while trying to fetch a category. Error: {error}, Stack: {stack}", ex.Message, ex.StackTrace);
       }
-
       return response;
     }
   }
