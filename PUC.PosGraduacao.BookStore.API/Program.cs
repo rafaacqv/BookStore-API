@@ -1,4 +1,5 @@
 using Microsoft.EntityFrameworkCore;
+using PUC.PosGraduacao.BookStore.API.Middleware;
 using PUC.PosGraduacao.BookStore.Infra.Data.Contexts;
 using PUC.PosGraduacao.BookStore.Services.Extensions;
 
@@ -16,6 +17,9 @@ builder.Services.AddServices(builder.Configuration);
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
+app.UseMiddleware<ExceptionMiddleware>();
+app.UseStatusCodePagesWithReExecute("/errors/{0}");
+
 if (app.Environment.IsDevelopment())
 {
   app.UseSwagger();
