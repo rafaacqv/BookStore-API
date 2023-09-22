@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace PUC.PosGraduacao.BookStore.Domain.DTO
 {
-  public class CategoriesListResponse : BaseResponse
+  public class CategoriesListResponse
   {
     public List<Category> Categories { get; set; } = new List<Category>();
   }

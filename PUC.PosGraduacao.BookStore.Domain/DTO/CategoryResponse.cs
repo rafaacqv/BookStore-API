@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace PUC.PosGraduacao.BookStore.Domain.DTO
 {
-  public class CategoryResponse : BaseResponse
+  public class CategoryResponse
   {
     public int Id { get; set; }
     public string? Name { get; set; }
