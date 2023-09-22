@@ -7,9 +7,7 @@ using PUC.PosGraduacao.BookStore.Services.Services;
 
 namespace PUC.PosGraduacao.BookStore.API.Controllers
 {
-  [Route("api/[controller]")]
-  [ApiController]
-  public class ProductsController : ControllerBase
+  public class ProductsController : BaseApiController
   {
     private readonly IProductService _productService;
 

@@ -6,9 +6,7 @@ using PUC.PosGraduacao.BookStore.Domain.Models;
 
 namespace PUC.PosGraduacao.BookStore.API.Controllers
 {
-  [Route("api/[controller]")]
-  [ApiController]
-  public class FormatsController : ControllerBase
+  public class FormatsController : BaseApiController
   {
     private readonly IFormatService _formatService;
 

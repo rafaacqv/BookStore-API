@@ -6,9 +6,7 @@ using PUC.PosGraduacao.BookStore.Domain.Enums;
 
 namespace PUC.PosGraduacao.BookStore.API.Controllers
 {
-  [Route("api/[controller]")]
-  [ApiController]
-  public class CategoriesController : ControllerBase
+  public class CategoriesController : BaseApiController
   {
     private readonly ICategoryService _categoryService;
 
