@@ -21,15 +21,10 @@ namespace PUC.PosGraduacao.BookStore.Services.Services
     public async Task<CategoriesListResponse> GetAllCategoriesAsync()
     {
       var response = new CategoriesListResponse();
-      try
-      {
-        var categoriesList = await _baseRepository.GetAllAsync();
-        response.Categories = categoriesList.ToList();
-      }
-      catch (Exception ex)
-      {
-        _logger.LogError("Error while trying to fetch categories list. Error: {error}, Stack: {stack}", ex.Message, ex.StackTrace);
-      }
+
+      var categoriesList = await _baseRepository.GetAllAsync();
+      response.Categories = categoriesList.ToList();
+
       return response;
     }
 
@@ -37,15 +32,10 @@ namespace PUC.PosGraduacao.BookStore.Services.Services
     {
       _ = request ?? throw new ArgumentNullException(nameof(request));
       var response = new CategoryResponse();
-      try
-      {
-        var category = await _baseRepository.GetByIdAsync(request.Id);
-        response = _mapper.Map<CategoryResponse>(category);
-      }
-      catch(Exception ex)
-      {
-        _logger.LogError("Error while trying to fetch a category. Error: {error}, Stack: {stack}", ex.Message, ex.StackTrace);
-      }
+
+      var category = await _baseRepository.GetByIdAsync(request.Id);
+      response = _mapper.Map<CategoryResponse>(category);
+
       return response;
     }
   }

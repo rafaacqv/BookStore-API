@@ -1,7 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using PUC.PosGraduacao.BookStore.Domain.DTO;
 using PUC.PosGraduacao.BookStore.Domain.Interfaces.Services;
-using PUC.PosGraduacao.BookStore.Domain.Enums;
 
 namespace PUC.PosGraduacao.BookStore.API.Controllers
 {
@@ -18,18 +17,14 @@ namespace PUC.PosGraduacao.BookStore.API.Controllers
     public async Task<ActionResult<CategoriesListResponse>> GetCategories()
     {
       var response = await _categoryService.GetAllCategoriesAsync();
-      var responseObject = response.HttpStatus == StatusCodeEnum.NoContent ? null : response;
-
-      return StatusCode((int)response.HttpStatus, responseObject);
+      return Ok(response);
     }
 
     [HttpPost]
     public async Task<ActionResult<CategoryResponse>> GetCategory([FromBody] CategoryRequest request)
     {
       var response = await _categoryService.GetCategoryByIdAsync(request);
-      var responseObject = response.HttpStatus == StatusCodeEnum.NoContent ? null : response;
-
-      return StatusCode((int)response.HttpStatus, responseObject);
+      return Ok(response);
     }
   }
 }

@@ -23,15 +23,10 @@ namespace PUC.PosGraduacao.BookStore.Services.Services
     public async Task<FormatsListResponse> GetAllFormatsAsync()
     {
       var response = new FormatsListResponse();
-      try
-      {
-        var formatsList = await _baseRepository.GetAllAsync();
-        response.Formats = formatsList.ToList();
-      }
-      catch (Exception ex)
-      {
-        _logger.LogError("Error while trying to fetch formats list. Error: {error}, Stack: {stack}", ex.Message, ex.StackTrace);
-      }
+
+      var formatsList = await _baseRepository.GetAllAsync();
+      response.Formats = formatsList.ToList();
+
       return response;
     }
 
@@ -39,15 +34,10 @@ namespace PUC.PosGraduacao.BookStore.Services.Services
     {
       _ = request ?? throw new ArgumentNullException(nameof(request));
       var response = new FormatResponse();
-      try
-      {
-        var format = await _baseRepository.GetByIdAsync(request.Id);
-        response = _mapper.Map<FormatResponse>(format);
-      }
-      catch (Exception ex)
-      {
-        _logger.LogError("Error while trying to fetch a format. Error: {error}, Stack: {stack}", ex.Message, ex.StackTrace);
-      }
+
+      var format = await _baseRepository.GetByIdAsync(request.Id);
+      response = _mapper.Map<FormatResponse>(format);
+
       return response;
     }
   }

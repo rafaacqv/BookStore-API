@@ -23,32 +23,22 @@ namespace PUC.PosGraduacao.BookStore.Services.Services
     public async Task<ProductsListResponse> GetAllProductsAsync()
     {
       var response = new ProductsListResponse();
-      try
-      {
-        var spec = new ProductsWithCategoriesAndFormatsSpecification();
-        var productsList = await _baseRepository.GetAllWithSpecAsync(spec);
-        response.Products = _mapper.Map<List<ProductDTO>>(productsList.ToList());
-      }
-      catch (Exception ex)
-      {
-        _logger.LogError("Error while trying to fetch products list. Error: {error}, Stack: {stack}", ex.Message, ex.Message);
-      }
+
+      var spec = new ProductsWithCategoriesAndFormatsSpecification();
+      var productsList = await _baseRepository.GetAllWithSpecAsync(spec);
+      response.Products = _mapper.Map<List<ProductDTO>>(productsList.ToList());
+      
       return response;
     }
 
     public async Task<ProductsResponse> GetProductByIdAsync(int id)
     {
       var response = new ProductsResponse();
-      try
-      {
-        var spec = new ProductsWithCategoriesAndFormatsSpecification(id);
-        var product = await _baseRepository.GetEntityWithSpecAsync(spec);
-        response.Product = _mapper.Map<ProductDTO>(product);
-      }
-      catch (Exception ex)
-      {
-        _logger.LogError("Error while trying to fetch a product. Error: {error}, Stack: {stack}", ex.Message, ex.Message);
-      }
+      var spec = new ProductsWithCategoriesAndFormatsSpecification(id);
+        
+      var product = await _baseRepository.GetEntityWithSpecAsync(spec);  
+      response.Product = _mapper.Map<ProductDTO>(product);
+      
       return response;
     }
   }
