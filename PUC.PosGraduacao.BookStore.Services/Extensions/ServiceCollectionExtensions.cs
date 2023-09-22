@@ -1,6 +1,8 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using PUC.PosGraduacao.BookStore.Domain.DTO;
 using PUC.PosGraduacao.BookStore.Domain.Interfaces.Repositories;
 using PUC.PosGraduacao.BookStore.Domain.Interfaces.Services;
 using PUC.PosGraduacao.BookStore.Infra.Data.Contexts;
@@ -27,6 +29,24 @@ namespace PUC.PosGraduacao.BookStore.Services.Extensions
 
       services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
       services.AddAutoMapper(typeof(MapperProfile).Assembly);
+
+      services.Configure<ApiBehaviorOptions>(opt =>
+      {
+        opt.InvalidModelStateResponseFactory = actionContext =>
+        {
+          var errors = actionContext.ModelState
+            .Where(e => e.Value.Errors.Count > 0)
+            .SelectMany(x => x.Value.Errors)
+            .Select(x => x.ErrorMessage).ToArray();
+
+          var errorResponse = new ApiValidationErrorResponse
+          {
+            Errors = errors
+          };
+
+          return new BadRequestObjectResult(errorResponse);
+        };
+      });
 
       return services;    
     }
