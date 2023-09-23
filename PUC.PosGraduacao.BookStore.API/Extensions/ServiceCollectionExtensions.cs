@@ -1,7 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.DependencyInjection;
 using PUC.PosGraduacao.BookStore.Domain.DTO;
 using PUC.PosGraduacao.BookStore.Domain.Interfaces.Repositories;
 using PUC.PosGraduacao.BookStore.Domain.Interfaces.Services;
@@ -10,7 +8,7 @@ using PUC.PosGraduacao.BookStore.Infra.Data.Profiles;
 using PUC.PosGraduacao.BookStore.Infra.Data.Repositories;
 using PUC.PosGraduacao.BookStore.Services.Services;
 
-namespace PUC.PosGraduacao.BookStore.Services.Extensions
+namespace PUC.PosGraduacao.BookStore.API.Extensions
 {
   public static class ServiceCollectionExtensions
   {
