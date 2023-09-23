@@ -29,7 +29,10 @@ if (app.Environment.IsDevelopment())
 app.UseHttpsRedirection();
 
 app.UseStaticFiles();
+
+app.UseCors("CorsPolicy");
 app.UseAuthorization();
+
 app.MapControllers();
 
 using var scope = app.Services.CreateScope();
