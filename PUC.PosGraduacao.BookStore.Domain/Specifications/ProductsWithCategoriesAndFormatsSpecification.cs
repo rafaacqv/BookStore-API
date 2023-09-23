@@ -4,7 +4,11 @@ namespace PUC.PosGraduacao.BookStore.Domain.Specifications
 {
   public class ProductsWithCategoriesAndFormatsSpecification : BaseSpecification<Product>
   {
-    public ProductsWithCategoriesAndFormatsSpecification(string sort)
+    public ProductsWithCategoriesAndFormatsSpecification(string? sort, int? formatId, int? categoryId)
+      : base(x => 
+        (!formatId.HasValue || x.FormatId == formatId) &&
+        (!categoryId.HasValue || x.CategoryId == categoryId)
+      )
     {
       AddInclude(x => x.Category);
       AddInclude(x => x.Format);
