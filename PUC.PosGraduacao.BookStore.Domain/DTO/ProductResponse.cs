@@ -1,6 +1,8 @@
-﻿namespace PUC.PosGraduacao.BookStore.Domain.DTO
+﻿using PUC.PosGraduacao.BookStore.Domain.Models;
+
+namespace PUC.PosGraduacao.BookStore.Domain.DTO
 {
-  public class ProductDTO
+  public class ProductResponse : BaseEntity
   {
     public string? Title { get; set; }
     public string? Description { get; set; }

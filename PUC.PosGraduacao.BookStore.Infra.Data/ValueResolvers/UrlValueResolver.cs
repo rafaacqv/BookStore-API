@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace PUC.PosGraduacao.BookStore.Infra.Data.ValueResolvers
 {
-    public class UrlValueResolver : IValueResolver<Product, ProductDTO, string>
+    public class UrlValueResolver : IValueResolver<Product, ProductResponse, string>
     {
         private readonly IConfiguration _configuration;
 
@@ -18,7 +18,7 @@ namespace PUC.PosGraduacao.BookStore.Infra.Data.ValueResolvers
         {
             _configuration = configuration;
         }
-        public string Resolve(Product source, ProductDTO destination, string destMember, ResolutionContext context)
+        public string Resolve(Product source, ProductResponse destination, string destMember, ResolutionContext context)
         {
             if (!string.IsNullOrEmpty(source.ImageUrl))
             {

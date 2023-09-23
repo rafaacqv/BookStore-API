@@ -13,7 +13,7 @@ namespace PUC.PosGraduacao.BookStore.Services.Services
     private readonly IBaseRepository<Product> _baseRepository;
     private readonly IMapper _mapper;
 
-    public ProductService(IBaseRepository<Product> baseRepository, IMapper mapper, ILogger<ProductService> logger) 
+    public ProductService(IBaseRepository<Product> baseRepository, IMapper mapper) 
     {
       _mapper = mapper;
       _baseRepository = baseRepository;
@@ -25,22 +25,19 @@ namespace PUC.PosGraduacao.BookStore.Services.Services
 
       var response = new ProductsListResponse()
       {
-        Products = _mapper.Map<List<ProductDTO>>(productsList.ToList())
+        Products = _mapper.Map<List<ProductResponse>>(productsList.ToList())
       };
       
       return response;
     }
 
-    public async Task<ProductsResponse> GetProductByIdAsync(int id)
+    public async Task<ProductResponse> GetProductByIdAsync(int id)
     {
       var spec = new ProductsWithCategoriesAndFormatsSpecification(id);
         
       var product = await _baseRepository.GetEntityWithSpecAsync(spec);
-      var response = new ProductsResponse()
-      {
-        Product = _mapper.Map<ProductDTO>(product)
-      };
-      
+      var response = _mapper.Map<ProductResponse>(product);
+
       return response;
     }
   }

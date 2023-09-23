@@ -21,7 +21,7 @@ namespace PUC.PosGraduacao.BookStore.API.Controllers
     }
 
     [HttpGet("{id}")]
-    public async Task<ActionResult<ProductsResponse>> GetProduct(int id)
+    public async Task<ActionResult<ProductResponse>> GetProduct(int id)
     {
       var product = await _productService.GetProductByIdAsync(id);
       if (product == null) return NotFound(new ApiResponse(404));

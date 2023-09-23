@@ -4,6 +4,6 @@ namespace PUC.PosGraduacao.BookStore.Domain.DTO
 {
   public class ProductsListResponse
   {
-    public List<ProductDTO> Products { get; set; } = new List<ProductDTO>();
+    public List<ProductResponse> Products { get; set; } = new List<ProductResponse>();
   }
 }
