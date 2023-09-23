@@ -2,7 +2,7 @@
 using System.Net;
 using System.Text.Json;
 
-namespace PUC.PosGraduacao.BookStore.API.Middleware
+namespace PUC.PosGraduacao.BookStore.API.Middlewares
 {
   public class ExceptionMiddleware
   {

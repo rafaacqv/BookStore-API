@@ -1,6 +1,6 @@
 using Microsoft.EntityFrameworkCore;
 using PUC.PosGraduacao.BookStore.API.Extensions;
-using PUC.PosGraduacao.BookStore.API.Middleware;
+using PUC.PosGraduacao.BookStore.API.Middlewares;
 using PUC.PosGraduacao.BookStore.Infra.Data.Contexts;
 
 var builder = WebApplication.CreateBuilder(args);
