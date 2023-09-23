@@ -16,15 +16,16 @@ namespace PUC.PosGraduacao.BookStore.API.Controllers
     [HttpGet]
     public async Task<ActionResult<CategoriesListResponse>> GetCategories()
     {
-      var response = await _categoryService.GetAllCategoriesAsync();
-      return Ok(response);
+      var categoriesList = await _categoryService.GetAllCategoriesAsync();
+      return Ok(categoriesList);
     }
 
     [HttpPost]
     public async Task<ActionResult<CategoryResponse>> GetCategory([FromBody] CategoryRequest request)
     {
-      var response = await _categoryService.GetCategoryByIdAsync(request);
-      return Ok(response);
+      var category = await _categoryService.GetCategoryByIdAsync(request);
+      if (category == null) return NotFound(new ApiResponse(404));
+      return Ok(category);
     }
   }
 }

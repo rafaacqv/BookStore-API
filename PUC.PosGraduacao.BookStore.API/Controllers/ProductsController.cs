@@ -16,15 +16,16 @@ namespace PUC.PosGraduacao.BookStore.API.Controllers
     [HttpGet]
     public async Task<ActionResult<ProductsListResponse>> GetProducts()
     {
-      var response = await _productService.GetAllProductsAsync();
-      return Ok(response);
+      var productsList = await _productService.GetAllProductsAsync();
+      return Ok(productsList);
     }
 
     [HttpGet("{id}")]
     public async Task<ActionResult<ProductsResponse>> GetProduct(int id)
     {
-      var response = await _productService.GetProductByIdAsync(id);
-      return Ok(response);
+      var product = await _productService.GetProductByIdAsync(id);
+      if (product == null) return NotFound(new ApiResponse(404));
+      return Ok(product);
     }
   }
 }

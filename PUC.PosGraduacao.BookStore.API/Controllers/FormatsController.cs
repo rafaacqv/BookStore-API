@@ -16,15 +16,16 @@ namespace PUC.PosGraduacao.BookStore.API.Controllers
     [HttpGet]
     public async Task<ActionResult<FormatsListResponse>> GetFormats()
     {
-      var response = await _formatService.GetAllFormatsAsync();
-      return Ok(response);
+      var formatList = await _formatService.GetAllFormatsAsync();
+      return Ok(formatList);
     }
 
     [HttpPost]
     public async Task<ActionResult<FormatResponse>> GetFormat([FromBody] FormatRequest request)
     {
-      var response = await _formatService.GetFormatByIdAsync(request);
-      return Ok(response);
+      var format = await _formatService.GetFormatByIdAsync(request);
+      if (format == null) return NotFound(new ApiResponse(404));
+      return Ok(format);
     }
   }
 }
