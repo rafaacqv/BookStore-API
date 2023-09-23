@@ -7,6 +7,7 @@ namespace PUC.PosGraduacao.BookStore.Domain.Specifications
   {
     public ProductWithFiltersForCountSpecification(ProductSpecParams param)
       : base(x =>
+        (string.IsNullOrEmpty(param.Search) || x.Title.ToLower().Contains(param.Search)) &&
         (!param.FormatId.HasValue || x.FormatId == param.FormatId) &&
         (!param.CategoryId.HasValue || x.CategoryId == param.CategoryId)
       )

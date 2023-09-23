@@ -19,5 +19,11 @@ namespace PUC.PosGraduacao.BookStore.Domain.Specifications.Params
     public string? Sort { get; set; }
     public int? FormatId { get; set; }
     public int? CategoryId { get; set; }
+    private string _search { get; set; }
+    public string? Search 
+    {
+      get => _search;
+      set => _search = value.ToLower();
+    }
   }
 }

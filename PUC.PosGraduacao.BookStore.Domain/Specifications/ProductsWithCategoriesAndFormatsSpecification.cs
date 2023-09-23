@@ -6,7 +6,8 @@ namespace PUC.PosGraduacao.BookStore.Domain.Specifications
   public class ProductsWithCategoriesAndFormatsSpecification : BaseSpecification<Product>
   {
     public ProductsWithCategoriesAndFormatsSpecification(ProductSpecParams param)
-      : base(x => 
+      : base(x =>
+        (string.IsNullOrEmpty(param.Search) || x.Title.ToLower().Contains(param.Search)) &&
         (!param.FormatId.HasValue || x.FormatId == param.FormatId) &&
         (!param.CategoryId.HasValue || x.CategoryId == param.CategoryId)
       )
