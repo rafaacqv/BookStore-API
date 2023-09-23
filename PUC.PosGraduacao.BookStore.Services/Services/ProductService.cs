@@ -18,9 +18,9 @@ namespace PUC.PosGraduacao.BookStore.Services.Services
       _mapper = mapper;
       _baseRepository = baseRepository;
     }
-    public async Task<ProductsListResponse> GetAllProductsAsync()
+    public async Task<ProductsListResponse> GetAllProductsAsync(string sort)
     {
-      var spec = new ProductsWithCategoriesAndFormatsSpecification();
+      var spec = new ProductsWithCategoriesAndFormatsSpecification(sort);
       var productsList = await _baseRepository.GetAllWithSpecAsync(spec);
 
       var response = new ProductsListResponse()

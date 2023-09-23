@@ -5,7 +5,7 @@ namespace PUC.PosGraduacao.BookStore.Domain.Interfaces.Services
 {
   public interface IProductService
   {
-    Task<ProductsListResponse> GetAllProductsAsync();
+    Task<ProductsListResponse> GetAllProductsAsync(string sort);
     Task<ProductResponse> GetProductByIdAsync(int id);
   }
 }
