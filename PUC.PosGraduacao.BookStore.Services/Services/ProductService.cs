@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using Microsoft.Extensions.Logging;
 using PUC.PosGraduacao.BookStore.Domain.DTO;
+using PUC.PosGraduacao.BookStore.Domain.Helpers;
 using PUC.PosGraduacao.BookStore.Domain.Interfaces.Repositories;
 using PUC.PosGraduacao.BookStore.Domain.Interfaces.Services;
 using PUC.PosGraduacao.BookStore.Domain.Models;
@@ -19,17 +20,18 @@ namespace PUC.PosGraduacao.BookStore.Services.Services
       _mapper = mapper;
       _baseRepository = baseRepository;
     }
-    public async Task<ProductsListResponse> GetAllProductsAsync(ProductSpecParams param)
+    public async Task<Pagination<ProductResponse>> GetAllProductsAsync(ProductSpecParams param)
     {
       var spec = new ProductsWithCategoriesAndFormatsSpecification(param);
+      var countSpec = new ProductWithFiltersForCountSpecification(param);
+
+      var totalItems = await _baseRepository.CountAsync(spec);
+
       var productsList = await _baseRepository.GetAllWithSpecAsync(spec);
 
-      var response = new ProductsListResponse()
-      {
-        Products = _mapper.Map<List<ProductResponse>>(productsList.ToList())
-      };
-      
-      return response;
+      var data = _mapper.Map<List<ProductResponse>>(productsList);
+
+      return new Pagination<ProductResponse>(param.PageIndex, param.PageSize, totalItems, data);
     }
 
     public async Task<ProductResponse> GetProductByIdAsync(int id)
