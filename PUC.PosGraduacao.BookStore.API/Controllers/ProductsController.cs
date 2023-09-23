@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using PUC.PosGraduacao.BookStore.Domain.DTO;
 using PUC.PosGraduacao.BookStore.Domain.Interfaces.Services;
+using PUC.PosGraduacao.BookStore.Domain.Specifications.Params;
 
 namespace PUC.PosGraduacao.BookStore.API.Controllers
 {
@@ -14,10 +15,9 @@ namespace PUC.PosGraduacao.BookStore.API.Controllers
     }
 
     [HttpGet]
-    public async Task<ActionResult<ProductsListResponse>> GetProducts(
-      string? sort, int? formatId, int? categoryId)
+    public async Task<ActionResult<ProductsListResponse>> GetProducts([FromQuery] ProductSpecParams param)
     {
-      var productsList = await _productService.GetAllProductsAsync(sort, formatId, categoryId);
+      var productsList = await _productService.GetAllProductsAsync(param);
       return Ok(productsList);
     }
 

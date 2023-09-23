@@ -1,22 +1,25 @@
 ﻿using PUC.PosGraduacao.BookStore.Domain.Models;
+using PUC.PosGraduacao.BookStore.Domain.Specifications.Params;
 
 namespace PUC.PosGraduacao.BookStore.Domain.Specifications
 {
   public class ProductsWithCategoriesAndFormatsSpecification : BaseSpecification<Product>
   {
-    public ProductsWithCategoriesAndFormatsSpecification(string? sort, int? formatId, int? categoryId)
+    public ProductsWithCategoriesAndFormatsSpecification(ProductSpecParams param)
       : base(x => 
-        (!formatId.HasValue || x.FormatId == formatId) &&
-        (!categoryId.HasValue || x.CategoryId == categoryId)
+        (!param.FormatId.HasValue || x.FormatId == param.FormatId) &&
+        (!param.CategoryId.HasValue || x.CategoryId == param.CategoryId)
       )
     {
       AddInclude(x => x.Category);
       AddInclude(x => x.Format);
       AddOrderBy(x => x.Title);
+      ApplyPaging(param.PageSize * (param.PageIndex - 1), 
+        param.PageSize);
 
-      if (!string.IsNullOrEmpty(sort))
+      if (!string.IsNullOrEmpty(param.Sort))
       {
-        switch (sort)
+        switch (param.Sort)
         {
           case "priceAsc":
             AddOrderBy(p => p.Price);

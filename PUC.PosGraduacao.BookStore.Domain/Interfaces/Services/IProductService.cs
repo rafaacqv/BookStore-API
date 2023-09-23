@@ -1,11 +1,12 @@
 ﻿using PUC.PosGraduacao.BookStore.Domain.DTO;
 using PUC.PosGraduacao.BookStore.Domain.Models;
+using PUC.PosGraduacao.BookStore.Domain.Specifications.Params;
 
 namespace PUC.PosGraduacao.BookStore.Domain.Interfaces.Services
 {
   public interface IProductService
   {
-    Task<ProductsListResponse> GetAllProductsAsync(string? sort, int? formatId, int? categoryId);
+    Task<ProductsListResponse> GetAllProductsAsync(ProductSpecParams param);
     Task<ProductResponse> GetProductByIdAsync(int id);
   }
 }

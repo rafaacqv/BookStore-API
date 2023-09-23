@@ -5,6 +5,7 @@ using PUC.PosGraduacao.BookStore.Domain.Interfaces.Repositories;
 using PUC.PosGraduacao.BookStore.Domain.Interfaces.Services;
 using PUC.PosGraduacao.BookStore.Domain.Models;
 using PUC.PosGraduacao.BookStore.Domain.Specifications;
+using PUC.PosGraduacao.BookStore.Domain.Specifications.Params;
 
 namespace PUC.PosGraduacao.BookStore.Services.Services
 {
@@ -18,9 +19,9 @@ namespace PUC.PosGraduacao.BookStore.Services.Services
       _mapper = mapper;
       _baseRepository = baseRepository;
     }
-    public async Task<ProductsListResponse> GetAllProductsAsync(string? sort, int? formatId, int? categoryId)
+    public async Task<ProductsListResponse> GetAllProductsAsync(ProductSpecParams param)
     {
-      var spec = new ProductsWithCategoriesAndFormatsSpecification(sort, formatId, categoryId);
+      var spec = new ProductsWithCategoriesAndFormatsSpecification(param);
       var productsList = await _baseRepository.GetAllWithSpecAsync(spec);
 
       var response = new ProductsListResponse()
