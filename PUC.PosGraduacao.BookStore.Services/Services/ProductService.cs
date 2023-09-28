@@ -25,7 +25,7 @@ namespace PUC.PosGraduacao.BookStore.Services.Services
       var spec = new ProductsWithCategoriesAndFormatsSpecification(param);
       var countSpec = new ProductWithFiltersForCountSpecification(param);
 
-      var totalItems = await _baseRepository.CountAsync(spec);
+      var totalItems = await _baseRepository.CountAsync(countSpec);
 
       var productsList = await _baseRepository.GetAllWithSpecAsync(spec);
 
