@@ -31,6 +31,7 @@ namespace PUC.PosGraduacao.BookStore.API.Extensions
       services.AddScoped<ICategoryService, CategoryService>();
 
       services.AddScoped(typeof(IBaseRepository<>), typeof(BaseRepository<>));
+      services.AddScoped<IBasketRepository, BasketRepository>();
 
       services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
       services.AddAutoMapper(typeof(MapperProfile).Assembly);
