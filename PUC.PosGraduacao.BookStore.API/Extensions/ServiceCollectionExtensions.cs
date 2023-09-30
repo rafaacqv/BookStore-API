@@ -7,6 +7,7 @@ using PUC.PosGraduacao.BookStore.Infra.Data.Contexts;
 using PUC.PosGraduacao.BookStore.Infra.Data.Profiles;
 using PUC.PosGraduacao.BookStore.Infra.Data.Repositories;
 using PUC.PosGraduacao.BookStore.Services.Services;
+using StackExchange.Redis;
 
 namespace PUC.PosGraduacao.BookStore.API.Extensions
 {
@@ -17,6 +18,12 @@ namespace PUC.PosGraduacao.BookStore.API.Extensions
       services.AddDbContext<ApplicationDbContext>(opt =>
       {
         opt.UseSqlServer(config.GetConnectionString("DefaultConnection"));
+      });
+
+      services.AddSingleton<IConnectionMultiplexer>(c =>
+      {
+        var options = ConfigurationOptions.Parse(config.GetConnectionString("Redis"));
+        return ConnectionMultiplexer.Connect(options);
       });
 
       services.AddScoped<IProductService, ProductService>();
