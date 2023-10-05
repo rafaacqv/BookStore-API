@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using PUC.PosGraduacao.BookStore.Domain.DTO;
+using PUC.PosGraduacao.BookStore.Domain.Interfaces.Services;
 using PUC.PosGraduacao.BookStore.Domain.Models.Identity;
 
 namespace PUC.PosGraduacao.BookStore.API.Controllers
@@ -9,11 +10,14 @@ namespace PUC.PosGraduacao.BookStore.API.Controllers
   {
     private readonly UserManager<AppUser> _userManager;
     private readonly SignInManager<AppUser> _signInManager;
-
-    public AccountController(UserManager<AppUser> userManager, SignInManager<AppUser> signInManager)
+    private readonly ITokenService _tokenService;
+    public AccountController(UserManager<AppUser> userManager, 
+                             SignInManager<AppUser> signInManager, 
+                             ITokenService tokenService)
     {
       _signInManager = signInManager;
       _userManager = userManager;
+      _tokenService = tokenService;
     }
 
     [HttpPost("login")]
@@ -28,7 +32,7 @@ namespace PUC.PosGraduacao.BookStore.API.Controllers
       return new UserDTO
       {
         Email = user.Email,
-        Token = "Token Placeholder",
+        Token = _tokenService.CreateToken(user),
         DisplayName = user.DisplayName,
       };
     }
@@ -50,7 +54,7 @@ namespace PUC.PosGraduacao.BookStore.API.Controllers
       {
         DisplayName = user.DisplayName,
         Email = user.Email,
-        Token = "Token Placeholder"
+        Token = _tokenService.CreateToken(user)
       };
     }
   }
