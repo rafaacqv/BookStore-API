@@ -1,6 +1,8 @@
-﻿using Microsoft.AspNetCore.Authorization;
+﻿using AutoMapper;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using PUC.PosGraduacao.BookStore.API.Extensions;
 using PUC.PosGraduacao.BookStore.Domain.DTO;
 using PUC.PosGraduacao.BookStore.Domain.Interfaces.Services;
 using PUC.PosGraduacao.BookStore.Domain.Models.Identity;
@@ -13,21 +15,23 @@ namespace PUC.PosGraduacao.BookStore.API.Controllers
     private readonly UserManager<AppUser> _userManager;
     private readonly SignInManager<AppUser> _signInManager;
     private readonly ITokenService _tokenService;
+    private readonly IMapper _mapper;
     public AccountController(UserManager<AppUser> userManager, 
                              SignInManager<AppUser> signInManager, 
-                             ITokenService tokenService)
+                             ITokenService tokenService,
+                             IMapper mapper)
     {
       _signInManager = signInManager;
       _userManager = userManager;
       _tokenService = tokenService;
+      _mapper = mapper;
     }
 
     [Authorize]
     [HttpGet]
     public async Task<ActionResult<UserDTO>> GetCurrentUserAsync()
     {
-      var email = User.FindFirstValue(ClaimTypes.Email);
-      var user = await _userManager.FindByEmailAsync(email);
+      var user = await _userManager.FindByEmailFromClaimsPrincipalAsync(User);
 
       return new UserDTO
       {
@@ -45,12 +49,22 @@ namespace PUC.PosGraduacao.BookStore.API.Controllers
     }
 
     [HttpGet("address")]
-    public async Task<ActionResult<Address>> GetUserAddressAsync()
+    public async Task<ActionResult<AddressDTO>> GetUserAddressAsync()
     {
-      var email = User.FindFirstValue(ClaimTypes.Email);
-      var user = await _userManager.FindByEmailAsync(email);
+      var user = await _userManager.FindUserByClaimsPrincipleWithAddressAsync(User);
+      return _mapper.Map<Address, AddressDTO>(user.Address);
+    }
 
-      return user.Address;
+    [Authorize]
+    [HttpPut("address")]
+    public async Task<ActionResult<AddressDTO>> UpdateUserAddress(AddressDTO address)
+    {
+      var user = await _userManager.FindUserByClaimsPrincipleWithAddressAsync(User);
+      user.Address = _mapper.Map<AddressDTO, Address>(address);
+
+      var result = await _userManager.UpdateAsync(user);
+      if (result.Succeeded) return Ok(_mapper.Map<Address, AddressDTO>(user.Address));
+      return BadRequest("Error trying to update the user.");
     }
 
     [HttpPost("login")]

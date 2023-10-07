@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using PUC.PosGraduacao.BookStore.Domain.DTO;
 using PUC.PosGraduacao.BookStore.Domain.Models;
+using PUC.PosGraduacao.BookStore.Domain.Models.Identity;
 using PUC.PosGraduacao.BookStore.Infra.Data.ValueResolvers;
 
 namespace PUC.PosGraduacao.BookStore.Infra.Data.Profiles
@@ -19,6 +20,8 @@ namespace PUC.PosGraduacao.BookStore.Infra.Data.Profiles
         opt => opt.MapFrom(src => src.Format.Type))
         .ForMember(dest => dest.ImageUrl,
         opt => opt.MapFrom<UrlValueResolver>());
+
+      CreateMap<Address, AddressDTO>().ReverseMap();
     }
   }
 }
