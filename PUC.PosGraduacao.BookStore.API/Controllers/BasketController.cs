@@ -1,4 +1,6 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using AutoMapper;
+using Microsoft.AspNetCore.Mvc;
+using PUC.PosGraduacao.BookStore.Domain.DTO;
 using PUC.PosGraduacao.BookStore.Domain.Interfaces.Services;
 using PUC.PosGraduacao.BookStore.Domain.Models;
 
@@ -7,9 +9,11 @@ namespace PUC.PosGraduacao.BookStore.API.Controllers
   public class BasketController : BaseApiController
   {
     private readonly IBasketService _basketService;
-    public BasketController(IBasketService basketService)
+    private readonly IMapper _mapper;
+    public BasketController(IBasketService basketService, IMapper mapper)
     {
       _basketService = basketService;
+      _mapper = mapper;
     }
 
     [HttpGet]
@@ -20,9 +24,10 @@ namespace PUC.PosGraduacao.BookStore.API.Controllers
     }
 
     [HttpPost]
-    public async Task<ActionResult<CustomerBasket>> UpdateBasket(CustomerBasket basket)
+    public async Task<ActionResult<CustomerBasket>> UpdateBasket(CustomerBasketDTO basket)
     {
-      var updateBasket = await _basketService.UpdateAsync(basket);
+      var customerBasket = _mapper.Map<CustomerBasketDTO, CustomerBasket>(basket);
+      var updateBasket = await _basketService.UpdateAsync(customerBasket);
       return Ok(updateBasket);
     }
 
