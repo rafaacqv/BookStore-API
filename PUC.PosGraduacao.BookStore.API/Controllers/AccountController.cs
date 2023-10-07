@@ -1,8 +1,10 @@
-﻿using Microsoft.AspNetCore.Identity;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using PUC.PosGraduacao.BookStore.Domain.DTO;
 using PUC.PosGraduacao.BookStore.Domain.Interfaces.Services;
 using PUC.PosGraduacao.BookStore.Domain.Models.Identity;
+using System.Security.Claims;
 
 namespace PUC.PosGraduacao.BookStore.API.Controllers
 {
@@ -18,6 +20,37 @@ namespace PUC.PosGraduacao.BookStore.API.Controllers
       _signInManager = signInManager;
       _userManager = userManager;
       _tokenService = tokenService;
+    }
+
+    [Authorize]
+    [HttpGet]
+    public async Task<ActionResult<UserDTO>> GetCurrentUserAsync()
+    {
+      var email = User.FindFirstValue(ClaimTypes.Email);
+      var user = await _userManager.FindByEmailAsync(email);
+
+      return new UserDTO
+      {
+        Email = user.Email,
+        Token = _tokenService.CreateToken(user),
+        DisplayName = user.DisplayName,
+      };
+    }
+
+    [Authorize]
+    [HttpGet("emailExists")]
+    public async Task<ActionResult<bool>> CheckEmailExistsAsync([FromQuery] string email)
+    {
+      return await _userManager.FindByEmailAsync(email) != null;
+    }
+
+    [HttpGet("address")]
+    public async Task<ActionResult<Address>> GetUserAddressAsync()
+    {
+      var email = User.FindFirstValue(ClaimTypes.Email);
+      var user = await _userManager.FindByEmailAsync(email);
+
+      return user.Address;
     }
 
     [HttpPost("login")]
