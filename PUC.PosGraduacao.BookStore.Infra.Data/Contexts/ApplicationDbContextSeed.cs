@@ -1,4 +1,5 @@
 ﻿using PUC.PosGraduacao.BookStore.Domain.Models;
+using PUC.PosGraduacao.BookStore.Domain.Models.Order;
 using System.Text.Json;
 
 namespace PUC.PosGraduacao.BookStore.Infra.Data.Contexts
@@ -34,7 +35,16 @@ namespace PUC.PosGraduacao.BookStore.Infra.Data.Contexts
         context.Products.AddRange(products);
       }
 
-      if(context.ChangeTracker.HasChanges()) await context.SaveChangesAsync();
+      if (!context.DeliveryMethods.Any())
+      {
+        var deliveryData = File.ReadAllText("../PUC.PosGraduacao.BookStore.Infra.Data/SeedData/delivery.json");
+        var methods = JsonSerializer.Deserialize<List<DeliveryMethod>>(deliveryData);
+
+        _ = methods ?? throw new ArgumentNullException(nameof(methods));
+        context.DeliveryMethods.AddRange(methods);
+      }
+
+      if (context.ChangeTracker.HasChanges()) await context.SaveChangesAsync();
     }
   }
 }
