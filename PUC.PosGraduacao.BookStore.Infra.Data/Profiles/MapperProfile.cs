@@ -24,6 +24,7 @@ namespace PUC.PosGraduacao.BookStore.Infra.Data.Profiles
       CreateMap<Address, AddressDTO>().ReverseMap();
       CreateMap<CustomerBasketDTO, CustomerBasket>();
       CreateMap<BasketItemDTO, BasketItem>();
+      CreateMap<AddressDTO, Domain.Models.Order.Address>();
     }
   }
 }
