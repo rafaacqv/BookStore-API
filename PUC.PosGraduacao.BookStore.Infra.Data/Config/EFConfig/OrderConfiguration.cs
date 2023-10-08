@@ -1,6 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using PUC.PosGraduacao.BookStore.Domain.Models.Order;
+using System.Reflection.Emit;
 
 namespace PUC.PosGraduacao.BookStore.Infra.Data.Config.EFConfig
 {
@@ -12,7 +13,9 @@ namespace PUC.PosGraduacao.BookStore.Infra.Data.Config.EFConfig
       {
         a.WithOwner();
       });
+      builder.Property(p => p.Subtotal).HasColumnType("decimal(18,4)");
 
+      builder.Navigation(a => a.ShipToAddress).IsRequired();
       builder.Property(s => s.Status)
         .HasConversion(
           o => o.ToString(),

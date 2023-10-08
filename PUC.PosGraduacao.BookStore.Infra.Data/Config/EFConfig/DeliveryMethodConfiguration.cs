@@ -8,8 +8,9 @@ namespace PUC.PosGraduacao.BookStore.Infra.Data.Config.EFConfig
   {
     public void Configure(EntityTypeBuilder<DeliveryMethod> builder)
     {
+      builder.Property(p => p.Id).IsRequired().ValueGeneratedNever();
       builder.Property(d => d.Price)
-        .HasColumnType("decimal{18,2}");
+        .HasColumnType("decimal(18,2)");
     }
   }
 }

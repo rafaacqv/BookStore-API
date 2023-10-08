@@ -1,6 +1,6 @@
 ﻿namespace PUC.PosGraduacao.BookStore.Domain.Models.Order
 {
-  public class Order
+  public class Order : BaseEntity
   {
     public Order() { }
 
