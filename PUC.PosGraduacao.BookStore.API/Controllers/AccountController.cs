@@ -41,7 +41,6 @@ namespace PUC.PosGraduacao.BookStore.API.Controllers
       };
     }
 
-    [Authorize]
     [HttpGet("emailExists")]
     public async Task<ActionResult<bool>> CheckEmailExistsAsync([FromQuery] string email)
     {
