@@ -2,6 +2,7 @@
 using PUC.PosGraduacao.BookStore.Domain.DTO;
 using PUC.PosGraduacao.BookStore.Domain.Models;
 using PUC.PosGraduacao.BookStore.Domain.Models.Identity;
+using PUC.PosGraduacao.BookStore.Domain.Models.Order;
 using PUC.PosGraduacao.BookStore.Infra.Data.ValueResolvers;
 
 namespace PUC.PosGraduacao.BookStore.Infra.Data.Profiles
@@ -21,10 +22,20 @@ namespace PUC.PosGraduacao.BookStore.Infra.Data.Profiles
         .ForMember(dest => dest.ImageUrl,
         opt => opt.MapFrom<UrlValueResolver>());
 
-      CreateMap<Address, AddressDTO>().ReverseMap();
+      CreateMap<Domain.Models.Identity.Address, AddressDTO>().ReverseMap();
       CreateMap<CustomerBasketDTO, CustomerBasket>();
       CreateMap<BasketItemDTO, BasketItem>();
       CreateMap<AddressDTO, Domain.Models.Order.Address>();
+
+      CreateMap<Order, OrderToReturnDTO>()
+        .ForMember(d => d.DeliveryMethod, o => o.MapFrom(s => s.DeliveryMethod.ShortName))
+        .ForMember(d => d.ShippingPrice, o => o.MapFrom(s => s.DeliveryMethod.Price));
+
+      CreateMap<OrderItem, OrderItemDTO>()
+        .ForMember(d => d.ProductId, o => o.MapFrom(s => s.ItemOrdered.ProductItemId))
+        .ForMember(d => d.ProductName, o => o.MapFrom(s => s.ItemOrdered.ProductName))
+        .ForMember(d => d.ImageUrl, o => o.MapFrom(s => s.ItemOrdered.ImageUrl))
+        .ForMember(d => d.ImageUrl, o => o.MapFrom<OrderItemUrlResolver>());
     }
   }
 }

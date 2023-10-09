@@ -9,7 +9,7 @@ namespace PUC.PosGraduacao.BookStore.Domain.Specifications
     {
       AddInclude(o => o.OrderItems);
       AddInclude(o => o.DeliveryMethod);
-      AddInclude(o => o.OrderDate);
+      AddOrderByDescending(o => o.OrderDate);
     }
 
     public OrdersWithItemsAndOrderingSpecification(int id, string email) 

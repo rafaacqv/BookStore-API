@@ -19,7 +19,6 @@ namespace PUC.PosGraduacao.BookStore.Infra.Data.ValueResolvers
             {
                 return _configuration["ApiUrl"] + source.ImageUrl;
             }
-
             return null;
         }
     }
