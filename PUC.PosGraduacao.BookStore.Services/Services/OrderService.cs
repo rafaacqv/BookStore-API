@@ -1,25 +1,20 @@
-﻿using PUC.PosGraduacao.BookStore.Domain.Interfaces.Repositories;
+﻿using PUC.PosGraduacao.BookStore.Domain.Interfaces;
+using PUC.PosGraduacao.BookStore.Domain.Interfaces.Repositories;
 using PUC.PosGraduacao.BookStore.Domain.Interfaces.Services;
 using PUC.PosGraduacao.BookStore.Domain.Models;
 using PUC.PosGraduacao.BookStore.Domain.Models.Order;
+using PUC.PosGraduacao.BookStore.Domain.Specifications;
 
 namespace PUC.PosGraduacao.BookStore.Services.Services
 {
   public class OrderService : IOrderService
   {
-    private readonly IBaseRepository<Order> _orderRepository;
-    private readonly IBaseRepository<Product> _productRepository;
-    private readonly IBaseRepository<DeliveryMethod> _deliveryRepository;
+    private readonly IUnitOfWork _unitOfWork;
     private readonly IBasketRepository _basketRepository;
 
-    public OrderService(IBaseRepository<Order> orderRepository, 
-                        IBaseRepository<Product> productRepository, 
-                        IBaseRepository<DeliveryMethod> deliveryRepository, 
-                        IBasketRepository basketRepository)
+    public OrderService(IUnitOfWork unitOfWork, IBasketRepository basketRepository)
     {
-      _orderRepository = orderRepository;
-      _productRepository = productRepository;
-      _deliveryRepository = deliveryRepository;
+      _unitOfWork = unitOfWork;
       _basketRepository = basketRepository;
     }
 
@@ -30,33 +25,40 @@ namespace PUC.PosGraduacao.BookStore.Services.Services
 
       foreach (var item in basket.Items)
       {
-        var productItem = await _productRepository.GetByIdAsync(item.Id);
+        var productItem = await _unitOfWork.Repository<Product>().GetByIdAsync(item.Id);
         var itemOrdered = new ProductItemOrdered(productItem.Id, productItem.Title, productItem.ImageUrl);
         var orderItem = new OrderItem(itemOrdered, productItem.Price, item.Quantity);
         items.Add(orderItem);
       }
 
-      var deliveryMethod = await _deliveryRepository.GetByIdAsync(deliveryMethodId);
+      var deliveryMethod = await _unitOfWork.Repository<DeliveryMethod>().GetByIdAsync(deliveryMethodId);
       var subTotal = items.Sum(item => item.Price * item.Quantity);
 
       var order = new Order(items, buyerEmail, shippingAddress, deliveryMethod, subTotal);
-      // Save to database
+      _unitOfWork.Repository<Order>().Create(order);
+
+      var result = await _unitOfWork.Complete();
+      if (result <= 0) return null;
+
+      await _basketRepository.DeleteBasketAsync(basketId);
       return order;
     }
 
-    public Task<IReadOnlyList<DeliveryMethod>> GetDeliveryMethodsAsync()
+    public async Task<IReadOnlyList<DeliveryMethod>> GetDeliveryMethodsAsync()
     {
-      throw new NotImplementedException();
+      return await _unitOfWork.Repository<DeliveryMethod>().GetAllAsync();
     }
 
-    public Task<Order> GetOrderByIdAsync(int id, string buyerEmail)
+    public async Task<Order> GetOrderByIdAsync(int id, string buyerEmail)
     {
-      throw new NotImplementedException();
+      var spec = new OrdersWithItemsAndOrderingSpecification(id, buyerEmail);
+      return await _unitOfWork.Repository<Order>().GetEntityWithSpecAsync(spec);
     }
 
-    public Task<IReadOnlyList<Order>> GetOrdersForUserAsync(string buyerEmail)
+    public async Task<IReadOnlyList<Order>> GetOrdersForUserAsync(string buyerEmail)
     {
-      throw new NotImplementedException();
+      var spec = new OrdersWithItemsAndOrderingSpecification(buyerEmail);
+      return await _unitOfWork.Repository<Order>().GetAllWithSpecAsync(spec);
     }
   }
 }

@@ -8,11 +8,12 @@ namespace PUC.PosGraduacao.BookStore.Domain.Interfaces.Repositories
   {
     Task<IReadOnlyList<T>> GetAllAsync();
     Task<T?> GetByIdAsync(int id);
-    Task CreateAsync(T entity);
-    Task UpdateAsync(int id, T entity);
-    Task DeleteAsync(int id);
     Task<T?> GetEntityWithSpecAsync(ISpecification<T> spec);
     Task<IReadOnlyList<T>> GetAllWithSpecAsync(ISpecification<T> spec);
     Task<int> CountAsync(ISpecification<T> spec);
+    void Create(T entity);
+    void Update(T entity);
+    void Delete(T Entity);
+
   }
 }

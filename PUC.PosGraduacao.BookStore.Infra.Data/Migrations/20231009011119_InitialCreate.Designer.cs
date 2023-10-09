@@ -12,7 +12,7 @@ using PUC.PosGraduacao.BookStore.Infra.Data.Contexts;
 namespace PUC.PosGraduacao.BookStore.Infra.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20231008222130_InitialCreate")]
+    [Migration("20231009011119_InitialCreate")]
     partial class InitialCreate
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -94,7 +94,6 @@ namespace PUC.PosGraduacao.BookStore.Infra.Data.Migrations
                         .HasColumnType("datetime2");
 
                     b.Property<string>("PaymentIntentId")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Status")

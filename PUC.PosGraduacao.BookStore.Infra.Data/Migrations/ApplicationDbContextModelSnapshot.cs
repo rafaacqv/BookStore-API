@@ -92,7 +92,6 @@ namespace PUC.PosGraduacao.BookStore.Infra.Data.Migrations
                         .HasColumnType("datetime2");
 
                     b.Property<string>("PaymentIntentId")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Status")

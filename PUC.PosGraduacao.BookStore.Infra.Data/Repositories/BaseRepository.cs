@@ -15,19 +15,14 @@ namespace PUC.PosGraduacao.BookStore.Infra.Data.Repositories
       _context = context;        
     }
 
-    public async Task CreateAsync(T entity)
+    public void Create(T entity)
     {
-      await _context.Set<T>().AddAsync(entity);
-      await _context.SaveChangesAsync();
+      _context.Set<T>().Add(entity);
     }
 
-    public async Task DeleteAsync(int id)
+    public void Delete(T entity)
     {
-      var entity = await GetByIdAsync(id);
-      ArgumentNullException.ThrowIfNull(entity);
-      
-      _context.Set<T>().Remove(entity);
-      await _context.SaveChangesAsync();
+      _context.Set<T>().Remove(entity); 
     }
 
     public async Task<IReadOnlyList<T>> GetAllAsync()
@@ -41,10 +36,10 @@ namespace PUC.PosGraduacao.BookStore.Infra.Data.Repositories
       return element;
     }
 
-    public async Task UpdateAsync(int id, T entity)
+    public void Update(T entity)
     {
-      _context.Set<T>().Update(entity);
-      await _context.SaveChangesAsync();
+      _context.Set<T>().Attach(entity);
+      _context.Entry(entity).State = EntityState.Modified;
     }
 
     public async Task<T?> GetEntityWithSpecAsync(ISpecification<T> spec)

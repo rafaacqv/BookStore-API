@@ -14,6 +14,7 @@ namespace PUC.PosGraduacao.BookStore.Infra.Data.Config.EFConfig
         a.WithOwner();
       });
       builder.Property(p => p.Subtotal).HasColumnType("decimal(18,4)");
+      builder.Property(p => p.PaymentIntentId).IsRequired(false);
 
       builder.Navigation(a => a.ShipToAddress).IsRequired();
       builder.Property(s => s.Status)
