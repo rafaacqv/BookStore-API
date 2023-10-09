@@ -12,6 +12,8 @@ using StackExchange.Redis;
 using static System.Net.Mime.MediaTypeNames;
 using System.Diagnostics.Metrics;
 using System.Reflection.Metadata;
+using PUC.PosGraduacao.BookStore.Domain.Interfaces;
+using PUC.PosGraduacao.BookStore.Infra.Data.UnitOfWork;
 
 namespace PUC.PosGraduacao.BookStore.API.Extensions
 {
@@ -30,6 +32,7 @@ namespace PUC.PosGraduacao.BookStore.API.Extensions
         return ConnectionMultiplexer.Connect(options);
       });
 
+      services.AddScoped<IUnitOfWork, UnitOfWork>();
       services.AddScoped<IProductService, ProductService>();
       services.AddScoped<IFormatService, FormatService>();
       services.AddScoped<ICategoryService, CategoryService>();
