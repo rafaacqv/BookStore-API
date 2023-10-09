@@ -47,6 +47,7 @@ namespace PUC.PosGraduacao.BookStore.API.Controllers
       return await _userManager.FindByEmailAsync(email) != null;
     }
 
+    [Authorize]
     [HttpGet("address")]
     public async Task<ActionResult<AddressDTO>> GetUserAddressAsync()
     {
