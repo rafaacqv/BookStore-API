@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.OpenApi.Models;
 using PUC.PosGraduacao.BookStore.Domain.DTO;
 using PUC.PosGraduacao.BookStore.Domain.Interfaces.Repositories;
 using PUC.PosGraduacao.BookStore.Domain.Interfaces.Services;
@@ -8,6 +9,9 @@ using PUC.PosGraduacao.BookStore.Infra.Data.Profiles;
 using PUC.PosGraduacao.BookStore.Infra.Data.Repositories;
 using PUC.PosGraduacao.BookStore.Services.Services;
 using StackExchange.Redis;
+using static System.Net.Mime.MediaTypeNames;
+using System.Diagnostics.Metrics;
+using System.Reflection.Metadata;
 
 namespace PUC.PosGraduacao.BookStore.API.Extensions
 {
@@ -64,6 +68,37 @@ namespace PUC.PosGraduacao.BookStore.API.Extensions
           policy.AllowAnyHeader().AllowAnyMethod().WithOrigins("https://localhost:4200");
         });
       });
+
+      services.AddSwaggerGen(c =>
+      {
+        c.SwaggerDoc("v1", new OpenApiInfo { Title = "API BookStore", Version = "v1" });
+
+        c.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme()
+        {
+          Name = "Authorization",
+          Type = SecuritySchemeType.ApiKey,
+          Scheme = "Bearer",
+          BearerFormat = "JWT",
+          In = ParameterLocation.Header,
+          Description = "JWT Authorization header using the Bearer scheme.",
+        });
+        
+        c.AddSecurityRequirement(new OpenApiSecurityRequirement
+        {
+          {
+            new OpenApiSecurityScheme
+            {
+              Reference = new OpenApiReference
+              {
+                Type = ReferenceType.SecurityScheme,
+                Id = "Bearer"
+              }
+            },
+            new string[] {}
+          }
+        });
+     });
+
 
       return services;    
     }
