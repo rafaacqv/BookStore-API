@@ -7,6 +7,10 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="Stripe.net" Version="42.8.0" />
+  </ItemGroup>
+
+  <ItemGroup>
     <ProjectReference Include="..\PUC.PosGraduacao.BookStore.Domain\PUC.PosGraduacao.BookStore.Domain.csproj" />
     <ProjectReference Include="..\PUC.PosGraduacao.BookStore.Infra.Data\PUC.PosGraduacao.BookStore.Infra.Data.csproj" />
   </ItemGroup>

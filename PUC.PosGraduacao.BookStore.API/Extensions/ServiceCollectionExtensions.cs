@@ -39,6 +39,7 @@ namespace PUC.PosGraduacao.BookStore.API.Extensions
       services.AddScoped<IBasketService, BasketService>();
       services.AddScoped<ITokenService, TokenService>();
       services.AddScoped<IOrderService, OrderService>();
+      services.AddScoped<IPaymentService, PaymentService>();
 
       services.AddScoped(typeof(IBaseRepository<>), typeof(BaseRepository<>));
       services.AddScoped<IBasketRepository, BasketRepository>();
