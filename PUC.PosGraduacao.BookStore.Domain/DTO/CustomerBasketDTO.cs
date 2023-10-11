@@ -1,5 +1,4 @@
-﻿using PUC.PosGraduacao.BookStore.Domain.Models;
-using System.ComponentModel.DataAnnotations;
+﻿using System.ComponentModel.DataAnnotations;
 
 namespace PUC.PosGraduacao.BookStore.Domain.DTO
 {
@@ -8,5 +7,9 @@ namespace PUC.PosGraduacao.BookStore.Domain.DTO
     [Required]
     public string Id { get; set; }
     public List<BasketItemDTO> Items { get; set; } = new List<BasketItemDTO>();
+    public int? DeliveryMethodId { get; set; }
+    public string? ClientSecret { get; set; }
+    public string? PaymentIntentd { get; set; }
+    public decimal ShippingPrice { get; set; }
   }
 }

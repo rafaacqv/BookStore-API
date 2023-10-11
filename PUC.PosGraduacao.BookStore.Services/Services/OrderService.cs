@@ -34,13 +34,23 @@ namespace PUC.PosGraduacao.BookStore.Services.Services
       var deliveryMethod = await _unitOfWork.Repository<DeliveryMethod>().GetByIdAsync(deliveryMethodId);
       var subTotal = items.Sum(item => item.Price * item.Quantity);
 
-      var order = new Order(items, buyerEmail, shippingAddress, deliveryMethod, subTotal);
-      _unitOfWork.Repository<Order>().Create(order);
+      var spec = new OrderByPaymentIntentIdSpecification(basket.PaymentIntentId);
+      var order = await _unitOfWork.Repository<Order>().GetEntityWithSpecAsync(spec);
 
+      if(order != null)
+      {
+        order.ShipToAddress = shippingAddress;
+        order.DeliveryMethod = deliveryMethod;
+        order.Subtotal = subTotal;
+        _unitOfWork.Repository<Order>().Update(order);
+      }
+      else
+      {
+        order = new Order(items, buyerEmail, shippingAddress, deliveryMethod, subTotal, basket.PaymentIntentId);
+        _unitOfWork.Repository<Order>().Create(order);
+      }
       var result = await _unitOfWork.Complete();
       if (result <= 0) return null;
-
-      await _basketRepository.DeleteBasketAsync(basketId);
       return order;
     }
 
