@@ -3,16 +3,21 @@ using Microsoft.AspNetCore.Mvc;
 using PUC.PosGraduacao.BookStore.Domain.DTO;
 using PUC.PosGraduacao.BookStore.Domain.Interfaces.Services;
 using PUC.PosGraduacao.BookStore.Domain.Models;
+using PUC.PosGraduacao.BookStore.Domain.Models.Order;
+using Stripe;
 
 namespace PUC.PosGraduacao.BookStore.API.Controllers
 {
   public class PaymentsController : BaseApiController
   {
+    private const string WhSecret = "whsec_e47eb87fd88a2f30579993b5e69a289809ce82afb5d242e1bce3564006bc1399";
     private readonly IPaymentService _paymentService;
+    private readonly ILogger<PaymentsController> _logger;
 
-    public PaymentsController(IPaymentService paymentService)
+    public PaymentsController(IPaymentService paymentService, ILogger<PaymentsController> logger)
     {
       _paymentService = paymentService;
+      _logger = logger;
     }
 
     [Authorize]
@@ -23,6 +28,34 @@ namespace PUC.PosGraduacao.BookStore.API.Controllers
       if (basket == null) return BadRequest(new ApiResponse(400, "Problem with your basket"));
 
       return basket;
+    }
+
+    [HttpPost("webhook")]
+    public async Task<ActionResult> StripeWebhook()
+    {
+      var json = await new StreamReader(Request.Body).ReadToEndAsync();
+      var stripeEvent = EventUtility.ConstructEvent(json, Request.Headers["Stripe-Signature"], WhSecret);
+
+      PaymentIntent intent;
+      Order order;
+
+      switch (stripeEvent.Type) 
+      {
+        case "payment_intent.succeeded":
+          intent = (PaymentIntent)stripeEvent.Data.Object;
+          _logger.LogInformation("Payment succeeded", intent.Id);
+          order = await _paymentService.UpdateOrderPaymentSucceeded(intent.Id);
+          _logger.LogInformation("Order updated payment received: ", order.Id);
+          break;
+        case "payment_intent.payment_failed":
+          intent = (PaymentIntent)stripeEvent.Data.Object;
+          _logger.LogInformation("Payment failed", intent.Id);
+          order = await _paymentService.UpdateOrderPaymentFailed(intent.Id);
+          _logger.LogInformation("Order updated payment failed: ", order.Id);
+          break;
+      }
+
+      return new EmptyResult();
     }
   }
 }

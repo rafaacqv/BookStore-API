@@ -4,6 +4,7 @@ using PUC.PosGraduacao.BookStore.Domain.Interfaces.Repositories;
 using PUC.PosGraduacao.BookStore.Domain.Interfaces.Services;
 using PUC.PosGraduacao.BookStore.Domain.Models;
 using PUC.PosGraduacao.BookStore.Domain.Models.Order;
+using PUC.PosGraduacao.BookStore.Domain.Specifications;
 using Stripe;
 
 namespace PUC.PosGraduacao.BookStore.Services.Services
@@ -72,6 +73,32 @@ namespace PUC.PosGraduacao.BookStore.Services.Services
 
       await _basketRepository.UpdateBasketAsync(basket);
       return basket;
+    }
+
+    public async Task<Order> UpdateOrderPaymentFailed(string paymentIntentId)
+    {
+      var spec = new OrderByPaymentIntentIdSpecification(paymentIntentId);
+      var order = await _unitOfWork.Repository<Order>().GetEntityWithSpecAsync(spec);
+
+      if (order == null) return null;
+
+      order.Status = OrderStatus.PaymentFailed;
+      await _unitOfWork.Complete();
+      
+      return order;
+    }
+
+    public async Task<Order> UpdateOrderPaymentSucceeded(string paymentIntentId)
+    {
+      var spec = new OrderByPaymentIntentIdSpecification(paymentIntentId);
+      var order = await _unitOfWork.Repository<Order>().GetEntityWithSpecAsync(spec);
+
+      if (order == null) return null;
+
+      order.Status = OrderStatus.PaymentRecevied;
+      await _unitOfWork.Complete();
+
+      return order;
     }
   }
 }
