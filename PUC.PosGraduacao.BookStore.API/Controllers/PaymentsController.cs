@@ -10,14 +10,16 @@ namespace PUC.PosGraduacao.BookStore.API.Controllers
 {
   public class PaymentsController : BaseApiController
   {
-    private const string WhSecret = "whsec_e47eb87fd88a2f30579993b5e69a289809ce82afb5d242e1bce3564006bc1399";
+    private readonly string _whSecret;
     private readonly IPaymentService _paymentService;
     private readonly ILogger<PaymentsController> _logger;
+    private readonly IConfiguration _config;
 
-    public PaymentsController(IPaymentService paymentService, ILogger<PaymentsController> logger)
+    public PaymentsController(IPaymentService paymentService, ILogger<PaymentsController> logger, IConfiguration config)
     {
       _paymentService = paymentService;
       _logger = logger;
+      _whSecret = config.GetSection("StripeSettings:WhSecret").Value;
     }
 
     [Authorize]
@@ -34,7 +36,7 @@ namespace PUC.PosGraduacao.BookStore.API.Controllers
     public async Task<ActionResult> StripeWebhook()
     {
       var json = await new StreamReader(Request.Body).ReadToEndAsync();
-      var stripeEvent = EventUtility.ConstructEvent(json, Request.Headers["Stripe-Signature"], WhSecret);
+      var stripeEvent = EventUtility.ConstructEvent(json, Request.Headers["Stripe-Signature"], _whSecret);
 
       PaymentIntent intent;
       Order order;
