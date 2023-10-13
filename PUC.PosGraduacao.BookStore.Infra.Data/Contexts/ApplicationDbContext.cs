@@ -11,12 +11,12 @@ namespace PUC.PosGraduacao.BookStore.Infra.Data.Contexts
     {
     }
 
-    public DbSet<Product> Products { get; set; }
-    public DbSet<Category> Categories { get; set; }
-    public DbSet<Format> Formats { get; set; }
-    public DbSet<Order> Orders { get; set; }
-    public DbSet<OrderItem> OrderItems { get; set; }
-    public DbSet<DeliveryMethod> DeliveryMethods { get; set; }
+    public DbSet<Product> Products { get; set; } = null!;
+    public DbSet<Category> Categories { get; set; } = null!;
+    public DbSet<Format> Formats { get; set; } = null!;
+    public DbSet<Order> Orders { get; set; } = null!;
+    public DbSet<OrderItem> OrderItems { get; set; } = null!;
+    public DbSet<DeliveryMethod> DeliveryMethods { get; set; } = null!;
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {

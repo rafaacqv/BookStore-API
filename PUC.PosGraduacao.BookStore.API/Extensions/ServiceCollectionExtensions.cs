@@ -23,7 +23,7 @@ namespace PUC.PosGraduacao.BookStore.API.Extensions
     {
       services.AddDbContext<ApplicationDbContext>(opt =>
       {
-        opt.UseSqlServer(config.GetConnectionString("DefaultConnection"));
+        opt.UseNpgsql(config.GetConnectionString("DefaultConnection"));
       });
 
       services.AddSingleton<IConnectionMultiplexer>(c =>
