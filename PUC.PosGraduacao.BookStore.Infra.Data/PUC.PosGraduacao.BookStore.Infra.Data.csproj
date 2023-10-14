@@ -33,6 +33,7 @@
   </ItemGroup>
 
   <ItemGroup>
+	<None Include="SeedData\**" CopyToOutputDirectory="PreserveNewest" />
     <ProjectReference Include="..\PUC.PosGraduacao.BookStore.Domain\PUC.PosGraduacao.BookStore.Domain.csproj" />
   </ItemGroup>
 

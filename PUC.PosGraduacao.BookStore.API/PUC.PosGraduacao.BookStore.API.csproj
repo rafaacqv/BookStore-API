@@ -7,20 +7,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Content Include="Content\images\products\cracking_code.jpg" />
-    <Content Include="Content\images\products\c_programming.jpg" />
-    <Content Include="Content\images\products\going_to.jpg" />
-    <Content Include="Content\images\products\harry_chamber.jpg" />
-    <Content Include="Content\images\products\harry_globet.jpg" />
-    <Content Include="Content\images\products\harry_half.jpg" />
-    <Content Include="Content\images\products\harry_stone.jpg" />
-    <Content Include="Content\images\products\if_animals.jpg" />
-    <Content Include="Content\images\products\love_you.jpg" />
-    <Content Include="Content\images\products\software_arc.jpg" />
-    <Content Include="Content\images\products\the_art.jpg" />
-  </ItemGroup>
-
-  <ItemGroup>
     <PackageReference Include="AutoMapper.Extensions.Microsoft.DependencyInjection" Version="12.0.1" />
     <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="6.0.22" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="6.0.22">
@@ -31,7 +17,8 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\PUC.PosGraduacao.BookStore.Services\PUC.PosGraduacao.BookStore.Services.csproj" />
+	  <Content Include="Content\**" CopyToPublishDirectory="PreserveNewest"></Content>
+      <ProjectReference Include="..\PUC.PosGraduacao.BookStore.Services\PUC.PosGraduacao.BookStore.Services.csproj" />
   </ItemGroup>
 
   <ItemGroup>
